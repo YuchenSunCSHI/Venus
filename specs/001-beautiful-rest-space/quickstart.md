@@ -158,14 +158,46 @@ cargo test --manifest-path src-tauri/Cargo.toml
 
 ### P3: 白噪音与音频控制
 
-1. 在休息空间中开启声音。
-2. 预期：1 秒内出现播放状态反馈，声音主题与视觉主题匹配。
-3. 调整音量或强度。
-4. 预期：变化平滑，无突兀过响或爆音。
-5. 点击静音或结束休息。
-6. 预期：1 秒内出现可理解状态变化；结束后音频停止或淡出至停止。
-7. 断开音频设备或模拟不可用。
-8. 预期：出现克制的音频不可用状态，用户仍可无声休息。
+#### P3 音频策略
+
+US3 第一版使用本地 generated bundled soundscape，不依赖在线音频请求即可完成稳定播放、静音、音量和退出淡出。在线音频 provider 只通过 `AudioProvider` 接口预留：无 key 实验源优先 Wikimedia Commons Audio；Freesound 仅允许通过 proxy/serverless 接入，不得在桌面端硬编码 token。
+
+图片主题与声音大类映射：
+
+| 图片主题 | 声音大类 |
+| --- | --- |
+| forest / meadow | forest |
+| lake / ocean | water |
+| rain | rain |
+| mountain / sky | air |
+| stars | night |
+
+Space 切图时，同类声音大类保持当前音频；跨类声音大类延迟约 1 秒后 crossfade。完成休息或返回工作时，声音应淡出并停止，不得残留播放。
+
+#### P3 自动化命令
+
+```powershell
+npm run test:unit -- src/test/unit/rest-space/audio-state.test.ts src/test/unit/rest-space/audio-matching.test.ts
+npm run test:integration -- src/test/integration/audio-device.test.ts
+npm run test:e2e -- src/test/e2e/us3-audio-controls.spec.ts src/test/e2e/us3-audio-performance.spec.ts
+npm run build
+```
+
+#### P3 手动场景
+
+1. 进入休息空间，确认默认不自动播放声音。
+2. 点击“开启声音”。
+3. 预期：1 秒内出现“声音播放中”，音频以低音量开始。
+4. 调整音量。
+5. 预期：变化平滑，无突兀过响或爆音。
+6. 点击“静音”，再点击“恢复声音”。
+7. 预期：状态在 1 秒内切换，恢复声音时使用上次音量。
+8. 按 Space 切换图片。
+9. 预期：同类主题不打断当前声音；跨类主题不硬切，等待短暂稳定后 crossfade。
+10. 点击“完成休息”或“返回工作”。
+11. 预期：声音淡出并停止，休息空间退出后没有残留播放。
+12. 模拟播放失败或设备不可用。
+13. 预期：出现克制的“声音暂时不可用”状态，用户仍可无声休息。
 
 ### 全屏静默手动验证
 
