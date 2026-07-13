@@ -1,7 +1,9 @@
 mod commands;
+mod content_cache;
 mod fullscreen;
 mod preferences;
 mod tray;
+mod window;
 
 pub fn run() {
     tauri::Builder::default()

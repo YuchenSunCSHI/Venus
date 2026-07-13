@@ -2,8 +2,10 @@ use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 
+use crate::content_cache::{cache_asset, CacheAssetInput, CacheAssetResult};
 use crate::fullscreen::is_fullscreen_context;
 use crate::preferences::{load_preferences, save_preferences, SavePreferencesResult, UserPreferences};
+use crate::window::{enter_rest_fullscreen, exit_rest_fullscreen, RestFullscreenInput, RestFullscreenResult};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -11,44 +13,6 @@ pub struct QuietContext {
     pub should_suppress_prompt: bool,
     pub reason: Option<String>,
     pub checked_at: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct RestFullscreenInput {
-    pub session_id: String,
-    pub display_mode: Option<String>,
-    pub reason: Option<String>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct RestFullscreenResult {
-    pub ok: bool,
-    pub entered_at: Option<String>,
-    pub exited_at: Option<String>,
-    pub recoverable_error: Option<String>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CacheAssetInput {
-    pub asset_type: String,
-    pub source_provider: String,
-    pub provider_asset_id: Option<String>,
-    pub remote_url: String,
-    pub license_note: String,
-    pub attribution: Option<String>,
-    pub expected_theme: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CacheAssetResult {
-    pub ok: bool,
-    pub local_path: Option<String>,
-    pub cached_at: Option<String>,
-    pub recoverable_error: Option<String>,
 }
 
 #[tauri::command]
@@ -77,39 +41,16 @@ pub async fn desktop_get_quiet_context() -> Result<QuietContext, String> {
 }
 
 #[tauri::command]
-pub async fn window_enter_rest_fullscreen(input: RestFullscreenInput) -> Result<RestFullscreenResult, String> {
-    let _session_id = input.session_id;
-    Ok(RestFullscreenResult {
-        ok: true,
-        entered_at: Some(Utc::now().to_rfc3339()),
-        exited_at: None,
-        recoverable_error: None,
-    })
+pub async fn window_enter_rest_fullscreen(app: AppHandle, input: RestFullscreenInput) -> Result<RestFullscreenResult, String> {
+    Ok(enter_rest_fullscreen(&app, input))
 }
 
 #[tauri::command]
-pub async fn window_exit_rest_fullscreen(input: RestFullscreenInput) -> Result<RestFullscreenResult, String> {
-    let _session_id = input.session_id;
-    Ok(RestFullscreenResult {
-        ok: true,
-        entered_at: None,
-        exited_at: Some(Utc::now().to_rfc3339()),
-        recoverable_error: None,
-    })
+pub async fn window_exit_rest_fullscreen(app: AppHandle, input: RestFullscreenInput) -> Result<RestFullscreenResult, String> {
+    Ok(exit_rest_fullscreen(&app, input))
 }
 
 #[tauri::command]
-pub async fn content_cache_asset(input: CacheAssetInput) -> Result<CacheAssetResult, String> {
-    let recoverable_error = if input.license_note.trim().is_empty() {
-        Some("license_missing".to_string())
-    } else {
-        Some("network_failed".to_string())
-    };
-
-    Ok(CacheAssetResult {
-        ok: false,
-        local_path: None,
-        cached_at: None,
-        recoverable_error,
-    })
+pub async fn content_cache_asset(app: AppHandle, input: CacheAssetInput) -> Result<CacheAssetResult, String> {
+    Ok(cache_asset(&app, input).await)
 }
