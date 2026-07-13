@@ -22,7 +22,7 @@ Venus MVP 将做成 Windows-first 的轻量桌面应用：用户在默认 50 分
 
 **Project Type**: desktop-app，单仓库应用。
 
-**Performance Goals**: 休息空间或美感 fallback 在正常桌面环境 2 秒内可见；提醒交互、音频开始/静音/停止反馈 1 秒内可感知；全屏静默检测不造成可感知卡顿；休息空间保持 60fps 目标，避免明显闪烁、音频突变和退出后残留。
+**Performance Goals**: 休息空间或美感 fallback 在正常桌面环境 2 秒内可见；提醒交互、音频开始/静音/停止反馈 1 秒内可感知；全屏静默检测不造成可感知卡顿；休息空间保持 60fps 目标，图片呼吸动效仅使用 compositor 友好的 opacity/transform，避免明显闪烁、音频突变和退出后残留。
 
 **Constraints**: MVP 不采集或暴露敏感工作内容；不把产品语言医疗化或绩效化；默认无需账户、团队、健康统计；在线内容源不得依赖会暴露在客户端中的私密 API key；内容素材必须合法可用、记录来源/授权并可离线 fallback；Rust 侧保持薄集成层，避免把产品逻辑分散到双语言实现。
 
@@ -37,7 +37,7 @@ Venus MVP 将做成 Windows-first 的轻量桌面应用：用户在默认 50 分
 - **Chinese Documentation**: 本计划、[research.md](research.md)、[data-model.md](data-model.md)、[quickstart.md](quickstart.md) 和 [contracts/local-ipc-events.md](contracts/local-ipc-events.md) 均使用中文。quickstart 包含 Mermaid 状态流，用于内部共享休息流程、在线内容获取、缓存和 fallback 路径。
 - **Maintainability**: 模块边界按产品能力划分，跨语言边界只通过显式 IPC/事件契约传递，不让 Rust 与 TypeScript 同时实现同一状态机。内容源通过 provider 接口隔离，在线 provider、缓存 provider、本地 fallback provider 可替换。放弃 Electron 的原因是包体和运行时成本更高；放弃 .NET/WinUI 的原因是 Web 品质 UI 快速迭代和跨平台潜力较弱。
 - **Performance Budget**: 2 秒休息空间/fallback、1 秒提示与音频反馈、全屏检测无可感知卡顿为硬预算。验证方式包括 Playwright 性能标记、Vitest fake timer、手动秒表/录屏检查、Tauri 开发构建和 release 构建对比。
-- **UX Consistency**: 桌面优先，语言保持轻、静、美和个人化；核心控件最少化，必须包含快速退出、静音/音量入口；覆盖默认、加载、空、错误、成功、禁用、恢复状态；常见桌面窗口尺寸和全屏状态下文案/控制项不得遮挡关键视觉内容。
+- **UX Consistency**: 桌面优先，语言保持轻、静、美和个人化；核心控件最少化，必须包含快速退出、静音/音量入口；覆盖默认、加载、空、错误、成功、禁用、恢复状态；常见桌面窗口尺寸和全屏状态下文案/控制项不得遮挡关键视觉内容。视觉动效以图片呼吸感和 crossfade 为主，不引入雨、雪、粒子或 shader 等程序化自然层，除非后续验证静态呼吸仍不足。
 
 ## Project Structure
 

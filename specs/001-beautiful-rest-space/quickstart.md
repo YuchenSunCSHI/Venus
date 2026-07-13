@@ -93,6 +93,19 @@ cargo test --manifest-path src-tauri/Cargo.toml
 
 ### P2: 全屏美感休息空间
 
+#### P2 快速测试入口
+
+开发验证时不需要等待完整工作节奏。启动应用后可使用以下任一入口：
+
+- 托盘菜单：右键 Venus 托盘图标，选择“开始休息”。
+- 在线图调试入口：打开 `http://127.0.0.1:1420/?venusE2E=rest&venusProvider=online`，直接请求 Wikimedia Commons 并进入休息空间。
+- 本地 fallback 调试入口：打开 `http://127.0.0.1:1420/?venusE2E=rest&venusProvider=fallback`，直接进入离线 fallback 休息空间。
+- Prompt 调试入口：打开 `http://127.0.0.1:1420/?venusE2E=prompt&venusProvider=online`，先显示休息提示，再点击“开始休息”。
+
+当前推荐的首个在线 provider 是 Wikimedia Commons：无需私有 API key，支持 CORS，且能返回授权、作者和分辨率元数据。进入在线图休息空间后，按 Space 可切换同一批候选图片；图片切换应使用上一张淡出、下一张淡入的 crossfade，且图片本身保持非常缓慢的呼吸式缩放/平移。切换过程中不应出现空白闪屏、布局跳动或明显眩目的运动；系统开启 `prefers-reduced-motion` 时应降级为静态图。
+
+#### P2 场景步骤
+
 1. 在有网络环境下启动应用，触发当日内容准备。
 2. 预期：在线视觉/音频候选通过授权、主题和质量校验后被缓存。
 3. 在 prompt 中选择开始休息。
@@ -103,6 +116,45 @@ cargo test --manifest-path src-tauri/Cargo.toml
 8. 预期：2 秒内显示缓存或本地 fallback，用户无需理解网络状态即可继续休息。
 9. 等待休息结束或点击快速返回。
 10. 预期：应用给出简短、平静的返回反馈，并退出全屏/沉浸窗口。
+
+#### P2 自动化命令
+
+```powershell
+npm run test:unit -- src/test/unit/rest-space/content-provider.test.ts src/test/unit/rest-space/daily-moment-selector.test.ts src/test/unit/rest-space/cache-index.test.ts
+npm run test:integration -- src/test/integration/content-cache.test.ts src/test/integration/window-fullscreen.test.ts
+npm run test:e2e -- src/test/e2e/us2-rest-space.spec.ts src/test/e2e/us2-rest-space-performance.spec.ts
+npm run build
+cargo test --manifest-path src-tauri/Cargo.toml
+```
+
+#### P2 内容来源验收记录
+
+| 检查项 | 记录 |
+| --- | --- |
+| 在线 provider 名称 |  |
+| provider 查询主题 | forest / lake / meadow / mountain / ocean / rain / sky / stars |
+| 候选内容来源 URL |  |
+| 授权说明 `licenseNote` |  |
+| 作者/来源 `attribution` |  |
+| 分辨率 |  |
+| 主题与情绪 |  |
+| 视觉/音频匹配说明 |  |
+| 缓存本地路径 |  |
+| 缓存命中结果 |  |
+| 断网 fallback 结果 |  |
+| 2 秒内是否可见 |  |
+| 被拒绝候选原因 | `license_missing` / `resolution_too_low` / `theme_mismatch` / `rate_limited` / `provider_timeout` |
+
+#### P2 手动场景
+
+1. 在联网状态下准备一组合法候选内容。
+2. 预期：候选内容必须包含 provider、资源标识、授权说明、来源/作者、主题、质量和匹配标签。
+3. 将同一内容写入缓存后重新进入休息空间。
+4. 预期：缓存命中时无需等待在线 provider，休息空间仍在 2 秒内显示完整画面。
+5. 断开网络或模拟 provider timeout/rate limit。
+6. 预期：系统拒绝不合格在线结果，优先使用 ready 缓存；缓存不可用时使用 `public/moments/fallback.json` 中的 bundled fallback。
+7. 清空或破坏在线候选授权说明。
+8. 预期：候选被拒绝，原因记录为 `license_missing`，不得进入默认每日内容。
 
 ### P3: 白噪音与音频控制
 
@@ -127,7 +179,7 @@ cargo test --manifest-path src-tauri/Cargo.toml
 
 - Unit tests: cadence 计算、postpone、skip、quiet suppression、session transition、content fallback、audio playback state。
 - Integration tests: preference load/save、损坏偏好回退、desktop quiet context、online provider success/failure、content cache、license metadata validation、audio unavailable、Tauri IPC schema validation。
-- UI checks: 初次进入、prompt pending、rest loading、rest active、fallback、audio unavailable、completed、ended early。
+- UI checks: 初次进入、prompt pending、rest loading、rest active、fallback、控制项浮现、audio unavailable、completed、ended early。
 - Manual checks: Windows 全屏检测、系统托盘、release 构建启动体验、多显示器行为。
 
 ## 性能验收

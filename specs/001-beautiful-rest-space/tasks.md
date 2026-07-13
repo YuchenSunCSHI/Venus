@@ -112,30 +112,30 @@
 
 > 先编写这些测试并确认失败，再实现 US2。
 
-- [ ] T043 [P] [US2] 在 src/test/unit/rest-space/content-provider.test.ts 覆盖 provider candidate 授权缺失、分辨率不足、主题不匹配和限流失败拒绝规则
-- [ ] T044 [P] [US2] 在 src/test/unit/rest-space/daily-moment-selector.test.ts 覆盖 online、cache、bundledFallback 的每日一景选择优先级
-- [ ] T045 [P] [US2] 在 src/test/integration/content-cache.test.ts 覆盖 content.cacheAsset 成功、network_failed、license_missing、write_failed 和缓存索引状态
-- [ ] T046 [P] [US2] 在 src/test/integration/window-fullscreen.test.ts 覆盖 window.enterRestFullscreen 失败时回落沉浸窗口且不空白
-- [ ] T047 [P] [US2] 在 src/test/e2e/us2-rest-space.spec.ts 覆盖 rest loading、rest active、fallback、completed、endedEarly、鼠标/键盘/临近结束触发控制项浮现和返回工作 UI journey
-- [ ] T048 [US2] 在 src/test/e2e/us2-rest-space-performance.spec.ts 验证 daily moment 或 polished fallback 95% 情况 2 秒内可见
+- [X] T043 [P] [US2] 在 src/test/unit/rest-space/content-provider.test.ts 覆盖 provider candidate 授权缺失、分辨率不足、主题不匹配和限流失败拒绝规则
+- [X] T044 [P] [US2] 在 src/test/unit/rest-space/daily-moment-selector.test.ts 覆盖 online、cache、bundledFallback 的每日一景选择优先级
+- [X] T045 [P] [US2] 在 src/test/integration/content-cache.test.ts 覆盖 content.cacheAsset 成功、network_failed、license_missing、write_failed 和缓存索引状态
+- [X] T046 [P] [US2] 在 src/test/integration/window-fullscreen.test.ts 覆盖 window.enterRestFullscreen 失败时回落沉浸窗口且不空白
+- [X] T047 [P] [US2] 在 src/test/e2e/us2-rest-space.spec.ts 覆盖 rest loading、rest active、fallback、completed、endedEarly、鼠标/键盘/临近结束触发控制项浮现和返回工作 UI journey
+- [X] T048 [US2] 在 src/test/e2e/us2-rest-space-performance.spec.ts 验证 daily moment 或 polished fallback 95% 情况 2 秒内可见
 
 ### Implementation for User Story 2
 
-- [ ] T049 [P] [US2] 在 src/features/rest-space/content/types.ts 实现 VisualMoment、AudioMoment 内容元数据、ContentCacheEntry 和 ProviderCandidate 类型，作为视觉/音频素材来源与匹配信息的唯一数据模型
-- [ ] T050 [US2] 在 src/features/rest-space/content/provider.ts 实现可替换 ContentProvider 接口和 provider 超时/限流错误模型
-- [ ] T051 [US2] 在 src/features/rest-space/content/validation.ts 实现授权说明、来源、分辨率、主题和视听匹配校验
-- [ ] T052 [US2] 在 src/features/rest-space/content/dailyMomentSelector.ts 实现 online candidate、缓存和 bundled fallback 的选择策略
-- [ ] T053 [US2] 在 src/features/rest-space/content/cacheIndex.ts 实现缓存索引读取、过期处理、fallbackId 关联和不可删除 bundled fallback 规则
-- [ ] T054 [US2] 在 src-tauri/src/content_cache.rs 实现 content.cacheAsset 下载、格式错误、授权缺失和写入失败的可恢复返回
-- [ ] T055 [US2] 在 src-tauri/src/commands.rs 接入 content.cacheAsset、window.enterRestFullscreen 和 window.exitRestFullscreen 命令
-- [ ] T056 [US2] 在 src-tauri/src/window.rs 实现进入全屏、退出全屏和失败回落沉浸窗口逻辑
-- [ ] T057 [P] [US2] 在 public/moments/fallback.json 填写本地 fallback visual/audio 元数据、licenseNote、attribution 和匹配主题
-- [ ] T058 [P] [US2] 在 src/features/rest-space/components/RestSpace.tsx 创建全屏休息空间布局、每日一景展示和快速返回入口
-- [ ] T059 [P] [US2] 在 src/features/rest-space/components/RestContentStates.tsx 创建 loading、ready、fallback、unavailable、online unavailable 状态
-- [ ] T060 [US2] 在 src/features/rest-space/session/useRestSessionController.ts 接入 restLoading、restActive、restCompleting、completed、endedEarly 路径
-- [ ] T061 [US2] 在 src/features/rest-space/content/useDailyMoment.ts 实现休息前预取、缓存命中、provider 失败和本地 fallback 组合
-- [ ] T062 [US2] 在 src/app/styles/rest-space.css 实现全屏视觉、鼠标/键盘/状态变化/临近结束触发的低存在感控制项浮现、防遮挡布局和 60fps 友好动效
-- [ ] T063 [US2] 在 specs/001-beautiful-rest-space/quickstart.md 补充在线 provider、断网、缓存命中、本地 fallback 和授权记录验收步骤
+- [X] T049 [P] [US2] 在 src/features/rest-space/content/types.ts 实现 VisualMoment、AudioMoment 内容元数据、ContentCacheEntry 和 ProviderCandidate 类型，作为视觉/音频素材来源与匹配信息的唯一数据模型
+- [X] T050 [US2] 在 src/features/rest-space/content/provider.ts 实现可替换 ContentProvider 接口和 provider 超时/限流错误模型
+- [X] T051 [US2] 在 src/features/rest-space/content/validation.ts 实现授权说明、来源、分辨率、主题和视听匹配校验
+- [X] T052 [US2] 在 src/features/rest-space/content/dailyMomentSelector.ts 实现 online candidate、缓存和 bundled fallback 的选择策略
+- [X] T053 [US2] 在 src/features/rest-space/content/cacheIndex.ts 实现缓存索引读取、过期处理、fallbackId 关联和不可删除 bundled fallback 规则
+- [X] T054 [US2] 在 src-tauri/src/content_cache.rs 实现 content.cacheAsset 下载、格式错误、授权缺失和写入失败的可恢复返回
+- [X] T055 [US2] 在 src-tauri/src/commands.rs 接入 content.cacheAsset、window.enterRestFullscreen 和 window.exitRestFullscreen 命令
+- [X] T056 [US2] 在 src-tauri/src/window.rs 实现进入全屏、退出全屏和失败回落沉浸窗口逻辑
+- [X] T057 [P] [US2] 在 public/moments/fallback.json 填写本地 fallback visual/audio 元数据、licenseNote、attribution 和匹配主题
+- [X] T058 [P] [US2] 在 src/features/rest-space/components/RestSpace.tsx 创建全屏休息空间布局、每日一景展示和快速返回入口
+- [X] T059 [P] [US2] 在 src/features/rest-space/components/RestContentStates.tsx 创建 loading、ready、fallback、unavailable、online unavailable 状态
+- [X] T060 [US2] 在 src/features/rest-space/session/useRestSessionController.ts 接入 restLoading、restActive、restCompleting、completed、endedEarly 路径
+- [X] T061 [US2] 在 src/features/rest-space/content/useDailyMoment.ts 实现休息前预取、缓存命中、provider 失败和本地 fallback 组合
+- [X] T062 [US2] 在 src/app/styles/rest-space.css 实现全屏视觉、图片呼吸动效、Space 切图 crossfade、鼠标/键盘/状态变化/临近结束触发的低存在感控制项浮现、防遮挡布局和 60fps 友好动效
+- [X] T063 [US2] 在 specs/001-beautiful-rest-space/quickstart.md 补充在线 provider、断网、缓存命中、本地 fallback 和授权记录验收步骤
 
 **Checkpoint**: US2 可独立演示：接受休息后进入美感空间，在线内容、缓存和 fallback 都能在 2 秒预算内给出完整体验。
 
