@@ -2,20 +2,39 @@ import { useEffect, useRef, useState } from 'react';
 import type { RestSession } from '../session/types';
 import type { DailyMomentState } from '../content/useDailyMoment';
 import type { VisualMoment } from '../content/types';
+import type { UserPreferences } from '../preferences/defaults';
+import { useRestAudio } from '../audio/useRestAudio';
+import { AudioControls } from './AudioControls';
 import { RestContentStates } from './RestContentStates';
 
 export type RestSpaceProps = {
   session: RestSession;
   dailyMoment: DailyMomentState;
+  preferences: UserPreferences;
   onEndRest: () => void;
   onCompleteRest: () => void;
   onNextMoment: () => void;
+  onAudioPreferenceChange: (patch: Pick<UserPreferences, 'audioEnabledByDefault' | 'lastVolume'>) => void;
 };
 
-export function RestSpace({ session, dailyMoment, onEndRest, onCompleteRest, onNextMoment }: RestSpaceProps) {
+export function RestSpace({
+  session,
+  dailyMoment,
+  preferences,
+  onEndRest,
+  onCompleteRest,
+  onNextMoment,
+  onAudioPreferenceChange,
+}: RestSpaceProps) {
   const moment = dailyMoment.state === 'ready' || dailyMoment.state === 'fallback' ? dailyMoment.selection.moment : undefined;
   const latestMomentRef = useRef<VisualMoment>();
   const [previousMoment, setPreviousMoment] = useState<VisualMoment>();
+  const restAudio = useRestAudio({
+    enabled: session.state === 'restActive',
+    visualMoment: moment,
+    preferences,
+    onPreferenceChange: onAudioPreferenceChange,
+  });
 
   useEffect(() => {
     if (session.state !== 'restActive') {
@@ -73,6 +92,14 @@ export function RestSpace({ session, dailyMoment, onEndRest, onCompleteRest, onN
         <RestContentStates dailyMoment={dailyMoment} />
       </div>
       <div className="rest-space-controls" aria-label="休息空间控制">
+        {session.state === 'restActive' ? (
+          <AudioControls
+            audioSession={restAudio.audioSession}
+            onEnableAudio={restAudio.enableAudio}
+            onToggleMuted={restAudio.toggleMuted}
+            onVolumeChange={restAudio.setVolume}
+          />
+        ) : null}
         {session.state === 'restActive' ? (
           <button type="button" onClick={onCompleteRest}>
             完成休息

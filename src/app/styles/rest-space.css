@@ -80,9 +80,37 @@
   right: clamp(20px, 4vw, 56px);
   bottom: clamp(20px, 5vh, 56px);
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: var(--venus-space-3);
   opacity: 0.28;
   transition: opacity var(--venus-motion-soft), transform var(--venus-motion-soft);
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--venus-space-3);
+}
+
+.audio-controls label {
+  display: flex;
+  align-items: center;
+  gap: var(--venus-space-2);
+  color: white;
+}
+
+.audio-controls input[type="range"] {
+  width: 112px;
+  accent-color: white;
+}
+
+.audio-status {
+  margin: 0;
+  color: rgb(255 255 255 / 78%);
+  font-size: 0.85rem;
 }
 
 .rest-space:hover .rest-space-controls,

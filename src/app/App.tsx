@@ -19,9 +19,11 @@ export function App() {
       <RestSpace
         session={restSession.session}
         dailyMoment={restSession.dailyMoment}
+        preferences={restSession.preferences}
         onEndRest={restSession.endRest}
         onCompleteRest={restSession.completeRest}
         onNextMoment={restSession.showNextMoment}
+        onAudioPreferenceChange={restSession.updateAudioPreferences}
       />
     </main>
   );

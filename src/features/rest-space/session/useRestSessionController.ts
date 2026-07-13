@@ -16,6 +16,7 @@ export type RestSessionController = {
   session: RestSession;
   dailyMoment: DailyMomentState;
   showNextMoment: () => void;
+  updateAudioPreferences: (patch: Pick<UserPreferences, 'audioEnabledByDefault' | 'lastVolume'>) => void;
   nextPromptAt: Date;
   acceptRest: () => void;
   postponeRest: () => void;
@@ -162,11 +163,25 @@ export function useRestSessionController(nowFactory: () => Date = () => new Date
     });
   };
 
+  const updateAudioPreferences = (patch: Pick<UserPreferences, 'audioEnabledByDefault' | 'lastVolume'>) => {
+    setPreferences((current) => {
+      const nextPreferences: UserPreferences = {
+        ...current,
+        ...patch,
+      };
+
+      void saveUserPreferences(nextPreferences);
+
+      return nextPreferences;
+    });
+  };
+
   return {
     preferences,
     session,
     dailyMoment,
     showNextMoment,
+    updateAudioPreferences,
     nextPromptAt,
     acceptRest: () => {
       setSession((current) => startRestFromPrompt(current, nowFactory()));
