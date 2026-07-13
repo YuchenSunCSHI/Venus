@@ -14,7 +14,7 @@ test.describe('US1 rest prompt journey', () => {
     await expect(page.getByRole('heading', { name: '休息一下' })).toBeVisible();
     await page.getByRole('button', { name: '开始休息' }).click();
 
-    await expect(page.getByRole('heading', { name: '正在进入休息' })).toBeVisible();
+    await expect(page.getByRole('region', { name: '全屏美感休息空间' })).toBeVisible();
   });
 
   test('prompt pending 后可以稍后提醒', async ({ page }) => {

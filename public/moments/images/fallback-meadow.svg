@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Venus fallback meadow</title>
+  <desc id="desc">A quiet generated meadow scene for the offline Venus rest fallback.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#d9e7e8"/>
+      <stop offset="0.54" stop-color="#f4f1ea"/>
+      <stop offset="1" stop-color="#d7dfca"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="30%" r="42%">
+      <stop offset="0" stop-color="#f2c777" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#f2c777" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hill" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8da08a"/>
+      <stop offset="1" stop-color="#596f5f"/>
+    </linearGradient>
+    <filter id="soften">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#sun)"/>
+  <path d="M0 760 C280 680 470 710 710 640 C980 560 1220 580 1500 650 C1700 700 1820 690 1920 660 L1920 1080 L0 1080 Z" fill="#c8d6be" opacity="0.82"/>
+  <path d="M0 820 C320 730 560 780 820 700 C1080 620 1360 680 1630 740 C1760 770 1850 760 1920 742 L1920 1080 L0 1080 Z" fill="url(#hill)" opacity="0.82"/>
+  <path d="M130 715 C260 685 380 695 520 660" stroke="#fffaf1" stroke-width="10" opacity="0.42" fill="none" filter="url(#soften)"/>
+  <path d="M1040 665 C1210 620 1390 660 1560 705" stroke="#fffaf1" stroke-width="12" opacity="0.36" fill="none" filter="url(#soften)"/>
+  <g opacity="0.3">
+    <circle cx="370" cy="360" r="5" fill="#fffaf1"/>
+    <circle cx="1480" cy="280" r="4" fill="#fffaf1"/>
+    <circle cx="1260" cy="410" r="3" fill="#fffaf1"/>
+  </g>
+</svg>

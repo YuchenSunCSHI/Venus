@@ -31,7 +31,7 @@ export function transitionRestSession(session: RestSession, event: RestSessionEv
         endedAt: event.at.toISOString(),
       });
     case 'suppressQuietly':
-      return transitionFrom(session, ['working', 'postponed'], {
+      return transitionFrom(session, ['working', 'postponed', 'promptPending'], {
         state: 'quietSuppressed',
         selectedAction: 'autoSuppress',
         quietReason: event.reason,

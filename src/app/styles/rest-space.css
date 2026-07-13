@@ -1,0 +1,167 @@
+.rest-space {
+  position: fixed;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--venus-color-mist);
+  animation: restEntry var(--venus-motion-rest-entry);
+}
+
+.rest-space-image-layer,
+.rest-space-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rest-space-image-layer {
+  overflow: hidden;
+  z-index: 0;
+}
+
+.rest-space-image-layer-current {
+  z-index: 1;
+  animation: restImageCrossfadeIn 900ms ease-out both;
+}
+
+.rest-space-image-layer-previous {
+  animation: restImageCrossfadeOut 900ms ease-out both;
+}
+
+.rest-space-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.012);
+  transform-origin: center;
+  animation: restImageBreathe 34s ease-in-out infinite;
+  will-change: transform;
+}
+
+.rest-space-fallback {
+  z-index: 0;
+  background: linear-gradient(135deg, var(--venus-color-sky), var(--venus-color-paper) 48%, var(--venus-color-moss));
+}
+
+.rest-space-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, rgb(38 48 44 / 46%), rgb(38 48 44 / 10%) 52%, rgb(38 48 44 / 34%));
+  animation: restLightBreathe 21s ease-in-out infinite;
+}
+
+.rest-space-copy {
+  position: absolute;
+  z-index: 3;
+  left: clamp(24px, 7vw, 96px);
+  bottom: clamp(72px, 14vh, 160px);
+  width: min(560px, calc(100vw - 48px));
+  color: white;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 28%);
+}
+
+.rest-space-copy h1 {
+  margin: 0;
+  font-family: var(--venus-font-display);
+  font-size: clamp(2.4rem, 7vw, 5.8rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.rest-space-status {
+  color: rgb(255 255 255 / 82%);
+}
+
+.rest-space-controls {
+  position: absolute;
+  z-index: 4;
+  right: clamp(20px, 4vw, 56px);
+  bottom: clamp(20px, 5vh, 56px);
+  display: flex;
+  gap: var(--venus-space-3);
+  opacity: 0.28;
+  transition: opacity var(--venus-motion-soft), transform var(--venus-motion-soft);
+}
+
+.rest-space:hover .rest-space-controls,
+.rest-space:focus-within .rest-space-controls,
+.rest-space[data-state="restLoading"] .rest-space-controls {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.rest-space-controls button {
+  min-height: 44px;
+  padding: 0 var(--venus-space-4);
+  border: 1px solid rgb(255 255 255 / 42%);
+  border-radius: var(--venus-radius-control);
+  background: rgb(255 255 255 / 18%);
+  color: white;
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+}
+
+@keyframes restEntry {
+  from {
+    opacity: 0;
+    transform: scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes restImageCrossfadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes restImageCrossfadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes restImageBreathe {
+  0%,
+  100% {
+    transform: scale(1.015) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.04) translate3d(-1.2%, -0.8%, 0);
+  }
+}
+
+@keyframes restLightBreathe {
+  0%,
+  100% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rest-space,
+  .rest-space-image-layer-current,
+  .rest-space-image-layer-previous,
+  .rest-space-image,
+  .rest-space-scrim {
+    animation: none;
+  }
+
+  .rest-space-image {
+    transform: scale(1.05);
+  }
+}

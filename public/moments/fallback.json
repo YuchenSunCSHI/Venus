@@ -1,5 +1,21 @@
 {
   "schemaVersion": 1,
-  "visualMoments": [],
+  "visualMoments": [
+    {
+      "id": "fallback-meadow-001",
+      "title": "静静的草地",
+      "theme": "meadow",
+      "mood": "calm",
+      "imageUrl": "/moments/images/fallback-meadow.svg",
+      "width": 1920,
+      "height": 1080,
+      "source": {
+        "sourceType": "bundledFallback",
+        "provider": "venus-generated",
+        "licenseNote": "Generated locally for Venus MVP fallback; safe to bundle and replace later.",
+        "attribution": "Venus"
+      }
+    }
+  ],
   "audioMoments": []
 }
