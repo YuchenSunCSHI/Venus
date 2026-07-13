@@ -46,6 +46,7 @@ Venus MVP 将做成 Windows-first 的轻量桌面应用：用户在默认 50 分
 ```text
 specs/001-beautiful-rest-space/
 ├── plan.md
+├── design-direction.md
 ├── research.md
 ├── data-model.md
 ├── quickstart.md
@@ -60,7 +61,7 @@ specs/001-beautiful-rest-space/
 src/
 ├── app/
 │   ├── App.tsx
-│   └── routes/
+│   └── styles/
 ├── features/
 │   └── rest-space/
 │       ├── components/
@@ -68,11 +69,14 @@ src/
 │       ├── session/
 │       ├── content/
 │       ├── audio/
-│       └── preferences/
+│       ├── preferences/
+│       ├── shared/
+│       └── desktop/
 ├── shared/
 │   ├── ui/
 │   ├── events/
-│   └── time/
+│   ├── time/
+│   └── performance/
 └── test/
     ├── unit/
     ├── integration/
@@ -83,6 +87,7 @@ src-tauri/
 │   ├── main.rs
 │   ├── commands.rs
 │   ├── fullscreen.rs
+│   ├── window.rs
 │   ├── content_cache.rs
 │   ├── preferences.rs
 │   └── tray.rs
@@ -94,6 +99,10 @@ public/
     ├── fallback.json
     ├── images/
     └── audio/
+
+docs/
+├── content-sources.md
+└── ux-language.md
 ```
 
 **Structure Decision**: 选择 Tauri 单应用结构。`src/` 承载 Web UI、产品状态、休息节奏、在线内容 provider、内容选择、音频匹配与体验；`src-tauri/` 承载 Windows 桌面集成、系统托盘、全屏检测、窗口控制、本地文件访问和缓存读写；`public/moments/` 存放 MVP 打包 fallback 素材元数据。该结构支持快速原型、桌面原生能力、在线内容可替换和未来跨平台扩展，同时避免在 Rust 与 TypeScript 中重复实现业务状态机。
@@ -104,7 +113,7 @@ public/
 
 ## Phase 1 Design
 
-见 [data-model.md](data-model.md)、[contracts/local-ipc-events.md](contracts/local-ipc-events.md) 和 [quickstart.md](quickstart.md)。设计产物覆盖核心实体、状态流转、本地 IPC/事件契约和端到端验证指南。
+见 [design-direction.md](design-direction.md)、[data-model.md](data-model.md)、[contracts/local-ipc-events.md](contracts/local-ipc-events.md) 和 [quickstart.md](quickstart.md)。设计产物覆盖视觉方向、交互原则、核心实体、状态流转、本地 IPC/事件契约和端到端验证指南。
 
 ## Complexity Tracking
 
