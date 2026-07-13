@@ -2,6 +2,7 @@ use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 
+use crate::fullscreen::is_fullscreen_context;
 use crate::preferences::{load_preferences, save_preferences, SavePreferencesResult, UserPreferences};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -62,9 +63,15 @@ pub async fn preferences_save(app: AppHandle, input: UserPreferences) -> Result<
 
 #[tauri::command]
 pub async fn desktop_get_quiet_context() -> Result<QuietContext, String> {
+    let fullscreen_detected = is_fullscreen_context();
+
     Ok(QuietContext {
-        should_suppress_prompt: false,
-        reason: None,
+        should_suppress_prompt: fullscreen_detected,
+        reason: if fullscreen_detected {
+            Some("fullscreenDetected".to_string())
+        } else {
+            None
+        },
         checked_at: Utc::now().to_rfc3339(),
     })
 }

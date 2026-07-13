@@ -1,9 +1,15 @@
 mod commands;
+mod fullscreen;
 mod preferences;
+mod tray;
 
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .setup(|app| {
+            tray::register_tray(app.handle())?;
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             commands::preferences_load,
             commands::preferences_save,

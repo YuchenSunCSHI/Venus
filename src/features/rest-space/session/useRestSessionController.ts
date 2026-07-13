@@ -19,7 +19,7 @@ export type RestSessionController = {
 
 export function useRestSessionController(nowFactory: () => Date = () => new Date()): RestSessionController {
   const [preferences, setPreferences] = useState<UserPreferences>(defaultPreferences);
-  const [session, setSession] = useState<RestSession>(() => createRestSession({ now: nowFactory() }));
+  const [session, setSession] = useState<RestSession>(() => createInitialSession(nowFactory()));
   const [workStartedAt] = useState(() => nowFactory());
   const [postponedAt, setPostponedAt] = useState<Date>();
 
@@ -92,4 +92,22 @@ export function useRestSessionController(nowFactory: () => Date = () => new Date
       setSession((current) => transitionRestSession(current, { type: 'endEarly', at: nowFactory() }));
     },
   };
+}
+
+function createInitialSession(now: Date): RestSession {
+  const session = createRestSession({ now });
+
+  if (shouldOpenPromptForE2E()) {
+    return transitionRestSession(session, { type: 'promptDue', at: now });
+  }
+
+  return session;
+}
+
+function shouldOpenPromptForE2E(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return new URLSearchParams(window.location.search).get('venusE2E') === 'prompt';
 }

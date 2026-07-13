@@ -78,8 +78,8 @@
 - [X] T024 [P] [US1] 在 src/test/unit/rest-space/session-state.test.ts 覆盖 working、promptPending、postponed、skipped、quietSuppressed、completed、endedEarly 状态流转
 - [X] T025 [P] [US1] 在 src/test/integration/preferences.persistence.test.ts 覆盖 preferences.load/save、损坏偏好回退和无 schema 偏好迁移
 - [X] T026 [P] [US1] 在 src/test/integration/desktop-quiet-context.test.ts 覆盖 desktop.getQuietContext 全屏静默、不返回敏感文本和 promptsDisabled 路径
-- [ ] T027 [P] [US1] 在 src/test/e2e/us1-rest-prompt.spec.ts 覆盖初次进入、prompt pending、接受、稍后、跳过和结束休息 UI journey
-- [ ] T028 [US1] 在 src/test/e2e/us1-prompt-performance.spec.ts 验证 prompt 接受、稍后、跳过反馈 95% 情况 1 秒内完成
+- [X] T027 [P] [US1] 在 src/test/e2e/us1-rest-prompt.spec.ts 覆盖初次进入、prompt pending、接受、稍后、跳过和结束休息 UI journey
+- [X] T028 [US1] 在 src/test/e2e/us1-prompt-performance.spec.ts 验证 prompt 接受、稍后、跳过反馈 95% 情况 1 秒内完成
 
 ### Implementation for User Story 1
 
@@ -89,14 +89,14 @@
 - [X] T032 [US1] 在 src/features/rest-space/session/state-machine.ts 实现 US1 所需 session 状态机和非法流转保护
 - [X] T033 [US1] 在 src/features/rest-space/preferences/store.ts 实现 TypeScript 偏好读取、默认回退、保存失败恢复和当前会话不阻塞逻辑
 - [X] T034 [US1] 在 src-tauri/src/preferences.rs 实现本地 JSON/key-value 偏好 load/save、schema 校验和损坏文件回退
-- [ ] T035 [US1] 在 src-tauri/src/fullscreen.rs 实现 Windows 全屏检测的轻量查询函数且不采集窗口标题
+- [X] T035 [US1] 在 src-tauri/src/fullscreen.rs 实现 Windows 全屏检测的轻量查询函数且不采集窗口标题
 - [X] T036 [US1] 在 src-tauri/src/commands.rs 接入 preferences.load、preferences.save 和 desktop.getQuietContext 命令
 - [X] T037 [P] [US1] 在 src/features/rest-space/components/RestPrompt.tsx 创建温和 prompt 组件，包含开始、稍后、跳过操作
 - [X] T038 [P] [US1] 在 src/features/rest-space/components/CadenceStatus.tsx 创建初次进入、工作中、稍后、跳过、已完成状态展示
 - [X] T039 [US1] 在 src/features/rest-space/session/useRestSessionController.ts 集成 scheduler、quiet context、preferences 和 prompt actions
 - [X] T040 [US1] 在 src/app/App.tsx 挂载 US1 控制器、prompt 入口和偏好加载状态
-- [ ] T041 [P] [US1] 在 src-tauri/src/tray.rs 实现系统托盘 pausePrompts、resumePrompts、startRest 事件骨架
-- [ ] T042 [US1] 在 specs/001-beautiful-rest-space/quickstart.md 补充 US1 自动化命令、全屏静默手动验收记录字段和接受标准
+- [X] T041 [P] [US1] 在 src-tauri/src/tray.rs 实现系统托盘 pausePrompts、resumePrompts、startRest 事件骨架
+- [X] T042 [US1] 在 specs/001-beautiful-rest-space/quickstart.md 补充 US1 自动化命令、全屏静默手动验收记录字段和接受标准
 
 **Checkpoint**: US1 可独立演示：默认节奏、温和提醒、稍后、跳过、全屏静默、结束路径均可验证。
 

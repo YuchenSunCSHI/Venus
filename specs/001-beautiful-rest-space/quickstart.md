@@ -23,7 +23,7 @@ pnpm test:e2e
 cargo test --manifest-path src-tauri/Cargo.toml
 ```
 
-若 implementation 阶段选择 npm，等价命令为 `npm install`、`npm run tauri dev`、`npm run test:unit`、`npm run test:integration`、`npm run test:e2e`。
+若 implementation 阶段选择 npm，等价命令为 `npm install`、`npm run tauri:dev`、`npm run test:unit`、`npm run test:integration`、`npm run test:e2e`。
 
 ## 核心状态流
 
@@ -63,6 +63,34 @@ stateDiagram-v2
 6. 选择“跳过”。
 7. 预期：本工作间隔不再重复打扰，会话状态为 `skipped`。
 
+#### P1 自动化命令
+
+```powershell
+npm run test:unit -- src/test/unit/rest-space/cadence-scheduler.test.ts src/test/unit/rest-space/session-state.test.ts
+npm run test:integration -- src/test/integration/preferences.persistence.test.ts src/test/integration/desktop-quiet-context.test.ts
+npm run build
+cargo test --manifest-path src-tauri/Cargo.toml
+```
+
+#### P1 手动验收记录
+
+| 检查项 | 记录 |
+| --- | --- |
+| Windows 版本 |  |
+| 显示器数量与缩放比例 |  |
+| Venus 启动方式 | `npm run tauri:dev` / release build |
+| 默认节奏 | 50 分钟工作 + 10 分钟休息 |
+| Prompt 出现方式 |  |
+| 接受休息反馈是否 1 秒内可感知 |  |
+| 稍后提醒反馈是否 1 秒内可感知 |  |
+| 跳过本次反馈是否 1 秒内可感知 |  |
+| 全屏应用名称 |  |
+| 全屏静默是否未遮挡工作内容 |  |
+| `quietSuppressed` reason | `fullscreenDetected` / `temporaryQuiet` / `promptsDisabled` |
+| 托盘开始休息事件 |  |
+| 托盘暂停/恢复提醒事件 |  |
+| 备注 |  |
+
 ### P2: 全屏美感休息空间
 
 1. 在有网络环境下启动应用，触发当日内容准备。
@@ -98,7 +126,7 @@ stateDiagram-v2
 ## 自动化测试覆盖要求
 
 - Unit tests: cadence 计算、postpone、skip、quiet suppression、session transition、content fallback、audio playback state。
-- Integration tests: preference load/save、损坏偏好回退、online provider success/failure、content cache、license metadata validation、audio unavailable、Tauri IPC schema validation。
+- Integration tests: preference load/save、损坏偏好回退、desktop quiet context、online provider success/failure、content cache、license metadata validation、audio unavailable、Tauri IPC schema validation。
 - UI checks: 初次进入、prompt pending、rest loading、rest active、fallback、audio unavailable、completed、ended early。
 - Manual checks: Windows 全屏检测、系统托盘、release 构建启动体验、多显示器行为。
 
