@@ -28,16 +28,16 @@
 
 **Purpose**: 初始化 Tauri + React + TypeScript + Vite 桌面应用结构、测试命令和 fallback 资源目录。
 
-- [ ] T001 在 package.json 初始化 Venus 桌面应用脚本、依赖和测试命令
-- [ ] T002 在 pnpm-lock.yaml 或 package-lock.json 固定前端依赖版本
-- [ ] T003 在 src/main.tsx 创建 React 应用入口
-- [ ] T004 [P] 在 src/app/App.tsx 创建应用根组件占位
-- [ ] T005 [P] 在 src/features/rest-space/ 创建 cadence、session、content、audio、preferences、components 子目录
-- [ ] T006 在 src-tauri/Cargo.toml 初始化 Tauri 2.x Rust 项目依赖
-- [ ] T007 在 src-tauri/tauri.conf.json 配置 Windows-first Tauri 应用窗口与构建输出
-- [ ] T008 [P] 在 vitest.config.ts 和 src/test/setup.ts 配置 Vitest、React Testing Library 与 fake timer 基线
-- [ ] T009 [P] 在 playwright.config.ts 和 src/test/e2e/ 配置 Playwright 桌面 WebView UI 检查基线
-- [ ] T010 [P] 在 public/moments/fallback.json、public/moments/images/、public/moments/audio/ 建立打包 fallback manifest 和资源目录占位
+- [X] T001 在 package.json 初始化 Venus 桌面应用脚本、依赖和测试命令
+- [X] T002 在 pnpm-lock.yaml 或 package-lock.json 固定前端依赖版本
+- [X] T003 在 src/main.tsx 创建 React 应用入口
+- [X] T004 [P] 在 src/app/App.tsx 创建应用根组件占位
+- [X] T005 [P] 在 src/features/rest-space/ 创建 cadence、session、content、audio、preferences、components 子目录
+- [X] T006 在 src-tauri/Cargo.toml 初始化 Tauri 2.x Rust 项目依赖
+- [X] T007 在 src-tauri/tauri.conf.json 配置 Windows-first Tauri 应用窗口与构建输出
+- [X] T008 [P] 在 vitest.config.ts 和 src/test/setup.ts 配置 Vitest、React Testing Library 与 fake timer 基线
+- [X] T009 [P] 在 playwright.config.ts 和 src/test/e2e/ 配置 Playwright 桌面 WebView UI 检查基线
+- [X] T010 [P] 在 public/moments/fallback.json、public/moments/images/、public/moments/audio/ 建立打包 fallback manifest 和资源目录占位
 
 ---
 
@@ -47,18 +47,18 @@
 
 **CRITICAL**: 本阶段完成前不得开始任一用户故事实现。
 
-- [ ] T011 [P] 在 src/features/rest-space/shared/types.ts 定义 Result、RecoverableError、DateKey 和 SourceMetadata 共享类型
-- [ ] T012 [P] 在 src/shared/events/domain-events.ts 定义 rest、audio、desktop TypeScript 事件名称和 payload 基础类型
-- [ ] T013 [P] 在 src/shared/time/clock.ts 实现可注入 Clock 接口和测试 fake clock 适配
-- [ ] T014 在 src/features/rest-space/preferences/defaults.ts 定义默认 50+10 节奏、音频偏好、prompt 开关和 schemaVersion
-- [ ] T015 在 src/features/rest-space/desktop/ipc-schema.ts 定义 preferences、window、desktop、content Tauri command 输入输出 schema
-- [ ] T016 [P] 在 src/features/rest-space/desktop/ipc-client.ts 创建类型化 invoke/listen 薄封装
-- [ ] T017 [P] 在 src-tauri/src/commands.rs 创建 preferences、window、desktop、content command 模块入口
-- [ ] T018 [P] 在 src-tauri/src/main.rs 注册 Tauri command handler、事件和插件入口
-- [ ] T019 [P] 在 src-tauri/capabilities/default.json 配置最小 IPC 能力与本地文件访问范围
-- [ ] T020 [P] 依据 specs/001-beautiful-rest-space/design-direction.md 在 src/app/styles/tokens.css 定义轻、静、美的颜色、排版、间距和动效 token
-- [ ] T021 [P] 在 src/shared/performance/marks.ts 定义 prompt、rest-space、audio、quiet-check 性能标记工具
-- [ ] T022 在 src/test/integration/ipc-schema.test.ts 验证本地 IPC schema 不包含窗口标题、会议内容或工作文本字段
+- [X] T011 [P] 在 src/features/rest-space/shared/types.ts 定义 Result、RecoverableError、DateKey 和 SourceMetadata 共享类型
+- [X] T012 [P] 在 src/shared/events/domain-events.ts 定义 rest、audio、desktop TypeScript 事件名称和 payload 基础类型
+- [X] T013 [P] 在 src/shared/time/clock.ts 实现可注入 Clock 接口和测试 fake clock 适配
+- [X] T014 在 src/features/rest-space/preferences/defaults.ts 定义默认 50+10 节奏、音频偏好、prompt 开关和 schemaVersion
+- [X] T015 在 src/features/rest-space/desktop/ipc-schema.ts 定义 preferences、window、desktop、content Tauri command 输入输出 schema
+- [X] T016 [P] 在 src/features/rest-space/desktop/ipc-client.ts 创建类型化 invoke/listen 薄封装
+- [X] T017 [P] 在 src-tauri/src/commands.rs 创建 preferences、window、desktop、content command 模块入口
+- [X] T018 [P] 在 src-tauri/src/main.rs 注册 Tauri command handler、事件和插件入口
+- [X] T019 [P] 在 src-tauri/capabilities/default.json 配置最小 IPC 能力与本地文件访问范围
+- [X] T020 [P] 依据 specs/001-beautiful-rest-space/design-direction.md 在 src/app/styles/tokens.css 定义轻、静、美的颜色、排版、间距和动效 token
+- [X] T021 [P] 在 src/shared/performance/marks.ts 定义 prompt、rest-space、audio、quiet-check 性能标记工具
+- [X] T022 在 src/test/integration/ipc-schema.test.ts 验证本地 IPC schema 不包含窗口标题、会议内容或工作文本字段
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel.
 
@@ -74,27 +74,27 @@
 
 > 先编写这些测试并确认失败，再实现 US1。
 
-- [ ] T023 [P] [US1] 在 src/test/unit/rest-space/cadence-scheduler.test.ts 覆盖默认 50+10、postponeMinutes 和 promptsEnabled=false 行为
-- [ ] T024 [P] [US1] 在 src/test/unit/rest-space/session-state.test.ts 覆盖 working、promptPending、postponed、skipped、quietSuppressed、completed、endedEarly 状态流转
-- [ ] T025 [P] [US1] 在 src/test/integration/preferences.persistence.test.ts 覆盖 preferences.load/save、损坏偏好回退和无 schema 偏好迁移
-- [ ] T026 [P] [US1] 在 src/test/integration/desktop-quiet-context.test.ts 覆盖 desktop.getQuietContext 全屏静默、不返回敏感文本和 promptsDisabled 路径
+- [X] T023 [P] [US1] 在 src/test/unit/rest-space/cadence-scheduler.test.ts 覆盖默认 50+10、postponeMinutes 和 promptsEnabled=false 行为
+- [X] T024 [P] [US1] 在 src/test/unit/rest-space/session-state.test.ts 覆盖 working、promptPending、postponed、skipped、quietSuppressed、completed、endedEarly 状态流转
+- [X] T025 [P] [US1] 在 src/test/integration/preferences.persistence.test.ts 覆盖 preferences.load/save、损坏偏好回退和无 schema 偏好迁移
+- [X] T026 [P] [US1] 在 src/test/integration/desktop-quiet-context.test.ts 覆盖 desktop.getQuietContext 全屏静默、不返回敏感文本和 promptsDisabled 路径
 - [ ] T027 [P] [US1] 在 src/test/e2e/us1-rest-prompt.spec.ts 覆盖初次进入、prompt pending、接受、稍后、跳过和结束休息 UI journey
 - [ ] T028 [US1] 在 src/test/e2e/us1-prompt-performance.spec.ts 验证 prompt 接受、稍后、跳过反馈 95% 情况 1 秒内完成
 
 ### Implementation for User Story 1
 
-- [ ] T029 [P] [US1] 在 src/features/rest-space/cadence/types.ts 实现 RestCadence 类型、校验范围和 suggestionMode 默认值
-- [ ] T030 [US1] 在 src/features/rest-space/cadence/scheduler.ts 实现基于 Clock 的工作间隔、稍后提醒和 prompt due 计算
-- [ ] T031 [P] [US1] 在 src/features/rest-space/session/types.ts 实现 RestSession、RestStage、RestSessionState 和 selectedAction 类型
-- [ ] T032 [US1] 在 src/features/rest-space/session/state-machine.ts 实现 US1 所需 session 状态机和非法流转保护
-- [ ] T033 [US1] 在 src/features/rest-space/preferences/store.ts 实现 TypeScript 偏好读取、默认回退、保存失败恢复和当前会话不阻塞逻辑
-- [ ] T034 [US1] 在 src-tauri/src/preferences.rs 实现本地 JSON/key-value 偏好 load/save、schema 校验和损坏文件回退
+- [X] T029 [P] [US1] 在 src/features/rest-space/cadence/types.ts 实现 RestCadence 类型、校验范围和 suggestionMode 默认值
+- [X] T030 [US1] 在 src/features/rest-space/cadence/scheduler.ts 实现基于 Clock 的工作间隔、稍后提醒和 prompt due 计算
+- [X] T031 [P] [US1] 在 src/features/rest-space/session/types.ts 实现 RestSession、RestStage、RestSessionState 和 selectedAction 类型
+- [X] T032 [US1] 在 src/features/rest-space/session/state-machine.ts 实现 US1 所需 session 状态机和非法流转保护
+- [X] T033 [US1] 在 src/features/rest-space/preferences/store.ts 实现 TypeScript 偏好读取、默认回退、保存失败恢复和当前会话不阻塞逻辑
+- [X] T034 [US1] 在 src-tauri/src/preferences.rs 实现本地 JSON/key-value 偏好 load/save、schema 校验和损坏文件回退
 - [ ] T035 [US1] 在 src-tauri/src/fullscreen.rs 实现 Windows 全屏检测的轻量查询函数且不采集窗口标题
-- [ ] T036 [US1] 在 src-tauri/src/commands.rs 接入 preferences.load、preferences.save 和 desktop.getQuietContext 命令
-- [ ] T037 [P] [US1] 在 src/features/rest-space/components/RestPrompt.tsx 创建温和 prompt 组件，包含开始、稍后、跳过操作
-- [ ] T038 [P] [US1] 在 src/features/rest-space/components/CadenceStatus.tsx 创建初次进入、工作中、稍后、跳过、已完成状态展示
-- [ ] T039 [US1] 在 src/features/rest-space/session/useRestSessionController.ts 集成 scheduler、quiet context、preferences 和 prompt actions
-- [ ] T040 [US1] 在 src/app/App.tsx 挂载 US1 控制器、prompt 入口和偏好加载状态
+- [X] T036 [US1] 在 src-tauri/src/commands.rs 接入 preferences.load、preferences.save 和 desktop.getQuietContext 命令
+- [X] T037 [P] [US1] 在 src/features/rest-space/components/RestPrompt.tsx 创建温和 prompt 组件，包含开始、稍后、跳过操作
+- [X] T038 [P] [US1] 在 src/features/rest-space/components/CadenceStatus.tsx 创建初次进入、工作中、稍后、跳过、已完成状态展示
+- [X] T039 [US1] 在 src/features/rest-space/session/useRestSessionController.ts 集成 scheduler、quiet context、preferences 和 prompt actions
+- [X] T040 [US1] 在 src/app/App.tsx 挂载 US1 控制器、prompt 入口和偏好加载状态
 - [ ] T041 [P] [US1] 在 src-tauri/src/tray.rs 实现系统托盘 pausePrompts、resumePrompts、startRest 事件骨架
 - [ ] T042 [US1] 在 specs/001-beautiful-rest-space/quickstart.md 补充 US1 自动化命令、全屏静默手动验收记录字段和接受标准
 
