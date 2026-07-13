@@ -14,7 +14,7 @@ Venus MVP 将做成 Windows-first 的轻量桌面应用：用户在默认 50 分
 
 **Primary Dependencies**: Tauri、React、Vite、TypeScript；UI 动效与状态优先用 CSS/React 原生能力；测试使用 Vitest、React Testing Library、Playwright；Rust 侧使用 Tauri 官方插件或薄封装处理系统托盘、窗口、Shell/OS 集成。
 
-**Storage**: 本地优先。用户偏好、节奏设置、提示开关、音频偏好、最近一次每日内容元数据、在线内容缓存索引和 fallback manifest 存入 Tauri app data 目录中的 JSON 或轻量 key-value store；MVP 不引入远端账户或数据库。
+**Storage**: 本地优先。用户偏好、节奏设置、提示开关、音频偏好、最近一次每日内容元数据、在线内容缓存索引和 fallback manifest 存入 Tauri app data 目录中的 JSON 或轻量 key-value store；MVP 不引入远端账户或数据库。US3 音频第一版使用 bundled soundscape 作为稳定声源，在线音频 provider 仅通过可替换接口预留，不阻塞本地播放链路。
 
 **Testing**: Vitest 覆盖节奏、休息会话状态机、每日内容选择和音频状态；React Testing Library 覆盖组件状态和偏好集成；Playwright 覆盖桌面 WebView UI 状态；Rust 侧用 cargo test 覆盖 IPC 参数校验和可纯函数化的桌面集成逻辑。全屏检测和系统托盘行为保留手动验证路径。
 
@@ -24,7 +24,7 @@ Venus MVP 将做成 Windows-first 的轻量桌面应用：用户在默认 50 分
 
 **Performance Goals**: 休息空间或美感 fallback 在正常桌面环境 2 秒内可见；提醒交互、音频开始/静音/停止反馈 1 秒内可感知；全屏静默检测不造成可感知卡顿；休息空间保持 60fps 目标，图片呼吸动效仅使用 compositor 友好的 opacity/transform，避免明显闪烁、音频突变和退出后残留。
 
-**Constraints**: MVP 不采集或暴露敏感工作内容；不把产品语言医疗化或绩效化；默认无需账户、团队、健康统计；在线内容源不得依赖会暴露在客户端中的私密 API key；内容素材必须合法可用、记录来源/授权并可离线 fallback；Rust 侧保持薄集成层，避免把产品逻辑分散到双语言实现。
+**Constraints**: MVP 不采集或暴露敏感工作内容；不把产品语言医疗化或绩效化；默认无需账户、团队、健康统计；在线内容源不得依赖会暴露在客户端中的私密 API key；内容素材必须合法可用、记录来源/授权并可离线 fallback；Rust 侧保持薄集成层，避免把产品逻辑分散到双语言实现。音频 provider 不得在桌面客户端硬编码 Freesound 等私有 token；若后续接 Freesound，必须经轻量 proxy 或 serverless provider；无 key 实验源优先采用 Wikimedia Commons Audio 并严格过滤授权、时长、格式、人声和音乐。
 
 **Scale/Scope**: 一个个人桌面应用 MVP；核心流程包含初次进入、工作间隔、提醒 pending、稍后、跳过、全屏静默、在线内容准备、缓存命中、休息 active、加载/失败 fallback、音频不可用、完成/提前结束。初始内容规模为每日一景、在线候选内容缓存和少量内置 fallback，不做内容库、推荐系统、多用户同步或云端账户。
 
@@ -105,7 +105,7 @@ docs/
 └── ux-language.md
 ```
 
-**Structure Decision**: 选择 Tauri 单应用结构。`src/` 承载 Web UI、产品状态、休息节奏、在线内容 provider、内容选择、音频匹配与体验；`src-tauri/` 承载 Windows 桌面集成、系统托盘、全屏检测、窗口控制、本地文件访问和缓存读写；`public/moments/` 存放 MVP 打包 fallback 素材元数据。该结构支持快速原型、桌面原生能力、在线内容可替换和未来跨平台扩展，同时避免在 Rust 与 TypeScript 中重复实现业务状态机。
+**Structure Decision**: 选择 Tauri 单应用结构。`src/` 承载 Web UI、产品状态、休息节奏、在线内容 provider、内容选择、音频匹配与体验；`src-tauri/` 承载 Windows 桌面集成、系统托盘、全屏检测、窗口控制、本地文件访问和缓存读写；`public/moments/` 存放 MVP 打包 fallback 素材元数据。该结构支持快速原型、桌面原生能力、在线内容可替换和未来跨平台扩展，同时避免在 Rust 与 TypeScript 中重复实现业务状态机。US3 音频结构采用 `audioProvider` 抽象 + bundled soundscape 默认实现，图片切换只在 soundscape 大类变化时延迟 crossfade，避免声音跟随每张图片频繁跳变。
 
 ## Phase 0 Research
 

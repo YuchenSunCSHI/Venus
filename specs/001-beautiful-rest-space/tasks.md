@@ -143,7 +143,7 @@
 
 ## Phase 5: User Story 3 - 用沉浸式白噪音辅助短暂恢复 (Priority: P3)
 
-**Goal**: 用户在休息空间内可选开启匹配视觉主题的白噪音/环境声，能快速调节、静音、停止，并在设备不可用时无声继续休息。
+**Goal**: 用户在休息空间内可选开启匹配视觉主题的白噪音/环境声，能快速调节、静音、停止，并在设备不可用时无声继续休息。US3 第一版使用本地 bundled soundscape 保证稳定体验，同时预留可替换 AudioProvider；后续在线音频优先实验 Wikimedia Commons Audio，无私有 token，长期高质量来源可接 Freesound proxy。
 
 **Independent Test**: 在休息空间中开启声音、调整强度、静音、断开设备并结束休息，验证音频状态反馈 1 秒内可感知且退出后无残留播放。
 
@@ -152,21 +152,22 @@
 > 先编写这些测试并确认失败，再实现 US3。
 
 - [ ] T064 [P] [US3] 在 src/test/unit/rest-space/audio-state.test.ts 覆盖 off、loading、playing、muted、unavailable、fadingOut 状态流转
-- [ ] T065 [P] [US3] 在 src/test/unit/rest-space/audio-matching.test.ts 覆盖 AudioMoment 与 VisualMoment theme 匹配和 silenceFallback 降级
-- [ ] T066 [P] [US3] 在 src/test/integration/audio-device.test.ts 覆盖设备不可用、在线音频不可用、缓存音频命中和结束播放停止
+- [ ] T065 [P] [US3] 在 src/test/unit/rest-space/audio-matching.test.ts 覆盖 VisualMoment theme 到 forest/water/rain/air/night soundscape 的映射、同类切图不换声源、跨类切图延迟 crossfade 和 silenceFallback 降级
+- [ ] T066 [P] [US3] 在 src/test/integration/audio-device.test.ts 覆盖设备不可用、本地 bundled soundscape 命中、在线音频 provider 不可用、缓存音频命中和结束播放停止
 - [ ] T067 [P] [US3] 在 src/test/e2e/us3-audio-controls.spec.ts 覆盖开启、音量/强度调整、静音、结束休息和无声继续 UI journey
 - [ ] T068 [US3] 在 src/test/e2e/us3-audio-performance.spec.ts 验证音频开始、静音、停止反馈 95% 情况 1 秒内完成
 
 ### Implementation for User Story 3
 
-- [ ] T069 [P] [US3] 在 src/features/rest-space/audio/types.ts 从 src/features/rest-space/content/types.ts 引用 AudioMoment，并仅实现 PlaybackState、VolumePreference 和 AudioUnavailableReason 播放态类型
-- [ ] T070 [US3] 在 src/features/rest-space/audio/audioController.ts 实现播放、平滑音量/强度变化、静音、淡出和结束停止逻辑
-- [ ] T071 [US3] 在 src/features/rest-space/audio/audioMatcher.ts 实现按 visual theme 选择匹配音频和 silenceFallback 降级
-- [ ] T072 [US3] 在 src/features/rest-space/audio/useRestAudio.ts 集成用户偏好、缓存音频、设备不可用和 playbackStateChanged 事件
+- [ ] T069 [P] [US3] 在 src/features/rest-space/audio/types.ts 从 src/features/rest-space/content/types.ts 引用 AudioMoment，并实现 Soundscape、PlaybackState、VolumePreference、AudioUnavailableReason 和 AudioProviderCandidate 类型
+- [ ] T070 [US3] 在 src/features/rest-space/audio/audioController.ts 实现播放、平滑音量/强度变化、静音、800ms 退出淡出、2s 跨 soundscape crossfade 和结束停止逻辑
+- [ ] T071 [US3] 在 src/features/rest-space/audio/audioMatcher.ts 实现 visual theme 到 forest/water/rain/air/night soundscape 的匹配、同类视觉切换保持当前音频、跨类视觉切换延迟 800-1200ms 后切换和 silenceFallback 降级
+- [ ] T072 [US3] 在 src/features/rest-space/audio/useRestAudio.ts 集成用户偏好、bundledSoundscapeProvider、缓存音频、设备不可用和 playbackStateChanged 事件
+- [ ] T072a [US3] 在 src/features/rest-space/audio/provider.ts 定义可替换 AudioProvider 接口，并记录 US3 首版默认 bundled soundscape；Wikimedia Commons Audio 作为无 key 后续实验 provider，Freesound 仅允许通过 proxy/serverless 接入且不得在桌面端硬编码 token
 - [ ] T073 [P] [US3] 在 src/features/rest-space/components/AudioControls.tsx 创建声音开启、静音、音量/强度控制和不可用状态
 - [ ] T074 [US3] 在 src/features/rest-space/components/RestSpace.tsx 集成 AudioControls 且保留最少控制项和快速退出入口
 - [ ] T075 [US3] 在 src/features/rest-space/preferences/store.ts 持久化 audioEnabledByDefault、lastVolume 和音频偏好恢复逻辑
-- [ ] T076 [US3] 在 specs/001-beautiful-rest-space/quickstart.md 补充耳机、设备断开、在线音频失败和结束淡出手动验收步骤
+- [ ] T076 [US3] 在 specs/001-beautiful-rest-space/quickstart.md 补充耳机、设备断开、本地 bundled soundscape、在线音频失败、图片切换后的音频保持/crossfade 和结束淡出手动验收步骤
 
 **Checkpoint**: US3 可独立演示：声音体验与视觉匹配、可控、可静音、可恢复，结束后无残留音频。
 
