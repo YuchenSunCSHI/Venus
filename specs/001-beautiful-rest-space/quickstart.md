@@ -211,7 +211,8 @@ npm run build
 
 - Unit tests: cadence 计算、postpone、skip、quiet suppression、session transition、content fallback、audio playback state。
 - Integration tests: preference load/save、损坏偏好回退、desktop quiet context、online provider success/failure、content cache、license metadata validation、audio unavailable、Tauri IPC schema validation。
-- UI checks: 初次进入、prompt pending、rest loading、rest active、fallback、控制项浮现、audio unavailable、completed、ended early。
+- UI checks: 初次进入、prompt pending、rest loading、rest active、fallback、控制项浮现、audio unavailable、completed、ended early、prompt 到 rest space 到 audio 到 return 的完整 MVP 闭环。
+- Performance budget checks: `src/test/integration/performance-budget.test.ts` 汇总 prompt 1 秒、rest space 2 秒和 audio 1 秒预算；`src/test/e2e/mvp-full-cycle.spec.ts` 覆盖端到端用户路径。
 - Manual checks: Windows 全屏检测、系统托盘、release 构建启动体验、多显示器行为。
 
 ## 性能验收

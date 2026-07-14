@@ -177,8 +177,8 @@
 
 **Purpose**: 补齐跨故事质量、性能、文档、素材授权、UX 一致性和发布前验证。
 
-- [ ] T077 [P] 在 src/test/e2e/mvp-full-cycle.spec.ts 覆盖 prompt 到 rest space 到 return 的完整 MVP 流程
-- [ ] T078 [P] 在 src/test/integration/performance-budget.test.ts 汇总 prompt 1 秒、rest space 2 秒、audio 1 秒性能标记断言
+- [X] T077 [P] 在 src/test/e2e/mvp-full-cycle.spec.ts 覆盖 prompt 到 rest space 到 return 的完整 MVP 流程
+- [X] T078 [P] 在 src/test/integration/performance-budget.test.ts 汇总 prompt 1 秒、rest space 2 秒、audio 1 秒性能标记断言
 - [ ] T079 在 specs/001-beautiful-rest-space/quickstart.md 增加 Mermaid 最终实现状态图、Windows 版本、显示器、网络和音频设备验收记录模板
 - [ ] T080 [P] 在 docs/content-sources.md 记录在线 provider、授权边界、缓存策略、fallback 替换规则和禁止硬编码私密 API key 约束
 - [ ] T081 [P] 在 docs/ux-language.md 记录 Venus 用户可见文案原则，避免医疗化、惩罚式和效率焦虑表达
