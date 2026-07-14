@@ -131,6 +131,36 @@
   cursor: pointer;
 }
 
+@media (max-width: 720px) {
+  .rest-space-copy {
+    left: 20px;
+    right: 20px;
+    bottom: 180px;
+    width: auto;
+  }
+
+  .rest-space-copy h1 {
+    font-size: clamp(2rem, 14vw, 4.2rem);
+  }
+
+  .rest-space-controls {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    justify-content: flex-start;
+  }
+
+  .audio-controls,
+  .audio-controls label {
+    width: 100%;
+  }
+
+  .audio-controls input[type="range"] {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
 @keyframes restEntry {
   from {
     opacity: 0;

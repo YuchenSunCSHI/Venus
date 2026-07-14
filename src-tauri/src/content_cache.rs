@@ -63,9 +63,8 @@ pub async fn cache_asset(app: &AppHandle, input: CacheAssetInput) -> CacheAssetR
 }
 
 async fn download_asset(remote_url: &str) -> Result<Vec<u8>, &'static str> {
-    if remote_url.starts_with("file://") {
-        let path = remote_url.trim_start_matches("file://");
-        return fs::read(path).map_err(|_| "download_failed");
+    if !remote_url.starts_with("https://") && !remote_url.starts_with("http://") {
+        return Err("unsupported_format");
     }
 
     let response = reqwest::get(remote_url).await.map_err(|_| "network_failed")?;

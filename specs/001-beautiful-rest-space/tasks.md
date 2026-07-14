@@ -179,11 +179,11 @@
 
 - [X] T077 [P] 在 src/test/e2e/mvp-full-cycle.spec.ts 覆盖 prompt 到 rest space 到 return 的完整 MVP 流程
 - [X] T078 [P] 在 src/test/integration/performance-budget.test.ts 汇总 prompt 1 秒、rest space 2 秒、audio 1 秒性能标记断言
-- [ ] T079 在 specs/001-beautiful-rest-space/quickstart.md 增加 Mermaid 最终实现状态图、Windows 版本、显示器、网络和音频设备验收记录模板
-- [ ] T080 [P] 在 docs/content-sources.md 记录在线 provider、授权边界、缓存策略、fallback 替换规则和禁止硬编码私密 API key 约束
-- [ ] T081 [P] 在 docs/ux-language.md 记录 Venus 用户可见文案原则，避免医疗化、惩罚式和效率焦虑表达
-- [ ] T082 对照 specs/001-beautiful-rest-space/design-direction.md 在 src/app/styles/tokens.css 和 src/app/styles/rest-space.css 完成 UX 一致性检查，覆盖 loading、empty、error、success、disabled、responsive 状态，并确认未采用营销首页、卡片墙、教程优先、大面积紫蓝渐变、过度玻璃拟态或霓虹默认主题
-- [ ] T083 在 src-tauri/src/fullscreen.rs 和 src-tauri/src/content_cache.rs 完成安全检查，确认不记录敏感工作内容、provider token 或窗口标题
+- [X] T079 在 specs/001-beautiful-rest-space/quickstart.md 增加 Mermaid 最终实现状态图、Windows 版本、显示器、网络和音频设备验收记录模板
+- [X] T080 [P] 在 docs/content-sources.md 记录在线 provider、授权边界、缓存策略、fallback 替换规则和禁止硬编码私密 API key 约束
+- [X] T081 [P] 在 docs/ux-language.md 记录 Venus 用户可见文案原则，避免医疗化、惩罚式和效率焦虑表达
+- [X] T082 对照 specs/001-beautiful-rest-space/design-direction.md 在 src/app/styles/tokens.css 和 src/app/styles/rest-space.css 完成 UX 一致性检查，覆盖 loading、empty、error、success、disabled、responsive 状态，并确认未采用营销首页、卡片墙、教程优先、大面积紫蓝渐变、过度玻璃拟态或霓虹默认主题
+- [X] T083 在 src-tauri/src/fullscreen.rs 和 src-tauri/src/content_cache.rs 完成安全检查，确认不记录敏感工作内容、provider token 或窗口标题
 - [ ] T084 在 specs/001-beautiful-rest-space/quickstart.md 记录自动化测试、cargo test、Playwright、全屏静默手动验证和 release smoke check 的最终结果
 
 ---

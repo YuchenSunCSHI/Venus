@@ -231,3 +231,76 @@ npm run build
 - 在线内容源必须记录 provider、资源标识、授权说明、作者/来源和缓存状态。
 - 缺少授权说明、主题不匹配、加载超时或被限流的在线内容不得进入默认每日内容。
 - 用户可见语言必须避免医疗化、惩罚式或效率焦虑表达。
+
+## MVP 最终实现状态图
+
+```mermaid
+flowchart TD
+  Launch[启动 Venus] --> Preferences[加载偏好与默认 50+10 节奏]
+  Preferences --> Working[工作中]
+  Working --> Quiet{全屏/暂停提醒/关闭提醒?}
+  Quiet -->|是| Suppressed[静默本轮提醒]
+  Suppressed --> Working
+  Quiet -->|否| Due{工作间隔到期?}
+  Due -->|否| Working
+  Due -->|是| Prompt[温和休息邀请]
+  Prompt --> Postpone[稍后提醒]
+  Prompt --> Skip[跳过本次]
+  Prompt --> StartRest[开始休息]
+  Postpone --> Working
+  Skip --> Working
+  StartRest --> Content[准备每日视觉内容]
+  Content --> Online{Wikimedia 候选合格?}
+  Online -->|是| Cache[缓存并展示每日一景]
+  Online -->|否| ReadyCache{ready 缓存可用?}
+  ReadyCache -->|是| Cache
+  ReadyCache -->|否| Fallback[展示 bundled fallback]
+  Cache --> RestActive[全屏休息空间]
+  Fallback --> RestActive
+  RestActive --> Audio{用户开启声音?}
+  Audio -->|是| Soundscape[播放 bundled soundscape]
+  Audio -->|否| Silent[无声休息]
+  Soundscape --> Controls[音量/静音/Space 切图/crossfade]
+  Silent --> Controls
+  Controls --> Complete[完成休息]
+  Controls --> EndEarly[返回工作]
+  Complete --> FadeOut[声音淡出并停止]
+  EndEarly --> FadeOut
+  FadeOut --> Working
+```
+
+## 最终环境验收记录模板
+
+| 检查项 | 记录 |
+| --- | --- |
+| 验收日期 | 2026-07-14 |
+| Windows 版本 | 待人工补录 |
+| 显示器数量与缩放比例 | 待人工补录 |
+| 网络状态 | 联网 / 断网 / 限流模拟 |
+| 音频设备 | 扬声器 / 耳机 / 设备不可用模拟 |
+| Venus 启动方式 | `npm run tauri:dev` / release installer |
+| release 安装包 | MSI / NSIS exe |
+| 全屏静默应用 | PowerPoint / 视频播放器 / 其他 |
+| 全屏静默结果 | 待人工补录 |
+| 多显示器休息空间位置 | 待人工补录 |
+| 音频开启、静音、淡出结果 | 待人工补录 |
+| 备注 |  |
+
+## 最终验证记录
+
+| 验证项 | 命令或来源 | 结果 |
+| --- | --- | --- |
+| Unit tests | `npm run test:unit` | 通过，7/7 files，23/23 tests |
+| Integration tests | `npm run test:integration` | 通过，7/7 files，22/22 tests |
+| E2E tests | `npm run test:e2e` | 通过，13/13 tests |
+| Frontend build | `npm run build` | 通过，产物位于 `dist/` |
+| Rust tests | `cargo test --manifest-path src-tauri/Cargo.toml` | 通过，0 tests executed |
+| Tauri release build | `npm run tauri:build` | 通过，生成 MSI 与 NSIS exe |
+| GitHub Release smoke | `v0.1.0` tag workflow | 通过，Release 已生成并上传 `.msi` 与 `.exe` |
+| 全屏静默手动验证 | 真实全屏应用场景 | 待人工补录 |
+
+### Release smoke 产物
+
+- 本地 MSI: `src-tauri/target/release/bundle/msi/Venus_0.1.0_x64_en-US.msi`
+- 本地 NSIS: `src-tauri/target/release/bundle/nsis/Venus_0.1.0_x64-setup.exe`
+- GitHub Release: `https://github.com/YuchenSunCSHI/Venus/releases/tag/v0.1.0`
