@@ -281,7 +281,7 @@ flowchart TD
 | Venus 启动方式 | `npm run tauri:dev` / release installer |
 | release 安装包 | MSI / NSIS exe |
 | 全屏静默应用 | PowerPoint / 视频播放器 / 其他 |
-| 全屏静默结果 | 待人工补录 |
+| 全屏静默结果 | 通过，2026-07-14 用户本机验证 |
 | 多显示器休息空间位置 | 待人工补录 |
 | 音频开启、静音、淡出结果 | 待人工补录 |
 | 备注 |  |
@@ -297,7 +297,7 @@ flowchart TD
 | Rust tests | `cargo test --manifest-path src-tauri/Cargo.toml` | 通过，0 tests executed |
 | Tauri release build | `npm run tauri:build` | 通过，生成 MSI 与 NSIS exe |
 | GitHub Release smoke | `v0.1.0` tag workflow | 通过，Release 已生成并上传 `.msi` 与 `.exe` |
-| 全屏静默手动验证 | 真实全屏应用场景 | 待人工补录 |
+| 全屏静默手动验证 | 真实全屏应用场景 | 通过，2026-07-14 用户本机验证 |
 
 ### Release smoke 产物
 

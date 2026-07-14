@@ -184,7 +184,7 @@
 - [X] T081 [P] 在 docs/ux-language.md 记录 Venus 用户可见文案原则，避免医疗化、惩罚式和效率焦虑表达
 - [X] T082 对照 specs/001-beautiful-rest-space/design-direction.md 在 src/app/styles/tokens.css 和 src/app/styles/rest-space.css 完成 UX 一致性检查，覆盖 loading、empty、error、success、disabled、responsive 状态，并确认未采用营销首页、卡片墙、教程优先、大面积紫蓝渐变、过度玻璃拟态或霓虹默认主题
 - [X] T083 在 src-tauri/src/fullscreen.rs 和 src-tauri/src/content_cache.rs 完成安全检查，确认不记录敏感工作内容、provider token 或窗口标题
-- [ ] T084 在 specs/001-beautiful-rest-space/quickstart.md 记录自动化测试、cargo test、Playwright、全屏静默手动验证和 release smoke check 的最终结果
+- [X] T084 在 specs/001-beautiful-rest-space/quickstart.md 记录自动化测试、cargo test、Playwright、全屏静默手动验证和 release smoke check 的最终结果
 
 ---
 
