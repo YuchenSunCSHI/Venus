@@ -4,7 +4,7 @@
 
 **Created**: 2026-07-14
 
-**Status**: Draft - Awaiting User Selection
+**Status**: Draft - Grill-me Decisions Captured
 
 **Input**: User description: "当前 MVP 已完成，希望在此基础上进行下一轮迭代。先参考同类产品实现，罗列可选需求，由用户取舍；可以创建一个新的 Spec。"
 
@@ -28,28 +28,79 @@
 - 不以“效率提升”“健康风险”“连续打卡”作为核心驱动力。
 - 每个用户故事必须能独立交付、独立验证、独立回滚。
 
+## 已确认产品决策
+
+### 提前预告与心流保护
+
+- 提前预告不是“小号 prompt”，而是纯视觉的环境信号。
+- 默认效果为主屏右下角边缘弧光，呈现低亮度呼吸感。
+- 弧光本体永远不带文字；弧光含义放入首次引导说明。
+- 弧光无声音、无系统通知、无任务栏闪烁、无托盘气泡、不抢焦点。
+- 弧光默认提前完整休息 2 分钟出现，持续 6-8 秒，只出现一次。
+- 用户处于持续键盘或鼠标输入时，既不显示弧光，也不显示正式休息 prompt。
+- 休息提醒在持续工作时进入 pending 状态，向后顺延到持续输入结束后。
+- 第一版 ActiveFlow 判断只基于本机键盘/鼠标输入节奏，不读取窗口标题、应用名、屏幕内容、会议内容或文档正文。
+- 用户停下后先显示右下角边缘弧光；如果 30 秒内仍保持安静，再显示正式 prompt。
+- 弧光 hover、focus 或 click 后可展开轻浮层，显示“休息快到了”与“稍后”“跳过”操作。
+- 预告展开层不提供“开始休息”；“开始休息”只出现在正式 prompt。
+- 全屏、演示或 reduced motion 场景下必须静默或降级。
+
+### 设置窗口与首次引导
+
+- 托盘右键菜单只提供“设置...”入口，不直接承载复杂配置。
+- 点击“设置...”打开独立设置窗口；窗口关闭不退出 Venus。
+- 如果设置窗口已打开，再次点击托盘入口应聚焦已有窗口。
+- 设置采用即时保存策略，不提供统一保存按钮。
+- 设置窗口必须提供恢复默认能力。
+- 首次引导与设置窗口共用同一份偏好模型，但首次引导只展示最少步骤。
+- 首次引导只包含 3 步：休息节奏、内容偏好、弧光提醒说明。
+- 完整配置放入独立设置窗口，包含休息节奏、提醒方式、内容偏好、环境声、隐私与数据。
+
+### 内容偏好与轻反馈
+
+- 内容偏好使用明确主题偏好，作为推荐排序信号，不绕过内容授权、质量和 fallback 校验。
+- “萌宠”改为更克制的“动物与陪伴”。
+- “动物与陪伴”只允许安静、柔和、低刺激、非表情包化的动物内容。
+- 内容主题建议包含：自然风光、水面与雨、森林与草地、天空与宇宙、城市与建筑、人文街景、动物与陪伴、艺术与纹理。
+- 第一版包含正向偏好与轻量负反馈：喜欢这类、少来点这类。
+- 第一版暂不做“不显示这类”的强屏蔽，也不做复杂收藏夹。
+- 休息空间中的轻反馈使用图标按钮，不直接显示文字。
+- 轻反馈按钮必须有 tooltip 和 aria-label。
+- 图标建议：喜欢这类使用 Heart；少来点这类使用 MinusCircle。
+- 点击“喜欢这类”只记录偏好，不切换当前画面。
+- 点击“少来点这类”记录降权信号，并切换到下一张画面。
+
+### 环境声偏好
+
+- 用户提到的“音乐”在产品文案中统一称为“环境声”。
+- 环境声默认关闭。
+- 用户可在设置窗口开启“进入休息空间时自动开启环境声”。
+- 自动开启环境声时使用上次音量。
+- 声音偏好不应导致突然外放；设备不可用时继续无声休息。
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - 让休息节奏适配真实工作日 (Priority: P1, 建议纳入)
 
-用户希望 Venus 不只固定 50+10，而是能适配自己的工作时间、短会间隙和自然休息，让提醒更少打断、更像一个懂边界的桌面伴侣。
+用户希望 Venus 不只固定 50+10，而是能适配自己的工作时间、持续输入状态和自然休息，让提醒更少打断、更像一个懂边界的桌面伴侣。
 
-**Why this priority**: MVP 已证明提醒和休息空间闭环可用；下一轮最值得补的是日常使用的“合时宜”。工作时间、微休息和提醒预告是同类桌面休息工具中最常见的成熟能力，也最容易提升留存。
+**Why this priority**: MVP 已证明提醒和休息空间闭环可用；下一轮最值得补的是日常使用的“合时宜”。工作时间、心流保护、右下角边缘弧光预告和独立设置窗口能提升日常可用性，同时避免频繁中断用户。
 
-**Independent Test**: 用户配置工作时间、启用微休息和提醒预告后，可独立验证 Venus 只在工作时间内提醒、能区分微休息与完整休息，并在即将提醒前给出低打扰预告。
+**Independent Test**: 用户配置工作时间和提醒方式后，可独立验证 Venus 只在允许时段提醒；持续输入时不打断；输入停止后先显示右下角边缘弧光，再短缓冲后显示正式 prompt。
 
 **Acceptance Scenarios**:
 
 1. **Given** 用户设置了工作时间，**When** 当前时间在工作时间外，**Then** Venus 不显示休息 prompt，但仍允许用户从托盘手动开始休息。
-2. **Given** 用户启用了微休息，**When** 到达微休息时间，**Then** Venus 显示一个比完整休息更短、更低存在感的提醒，不强制进入全屏空间。
-3. **Given** 完整休息即将到来，**When** 距离提醒还有短时间，**Then** Venus 可给出提前预告，让用户有机会稍后或跳过。
-4. **Given** 用户刚离开电脑或已经自然休息过，**When** 回到工作状态，**Then** Venus 可延后下一次提醒，而不是立刻补弹 prompt。
+2. **Given** 用户持续键盘或鼠标输入，**When** 到达预告或正式提醒时间，**Then** Venus 不显示弧光、不显示 prompt，并将提醒顺延到持续输入结束后。
+3. **Given** 用户在提醒 overdue 后停止输入，**When** Venus 检测到安静窗口，**Then** 先显示 6-8 秒右下角边缘弧光，并在 30 秒内仍安静时显示正式 prompt。
+4. **Given** 用户 hover、focus 或 click 弧光，**When** 轻浮层展开，**Then** 只提供“稍后”和“跳过”，不提供“开始休息”。
+5. **Given** 用户从托盘打开设置，**When** 设置窗口已经存在，**Then** Venus 聚焦已有设置窗口，而不是重复创建多个窗口。
 
 ---
 
 ### User Story 2 - 让休息空间形成个人偏好的美感记忆 (Priority: P2, 建议纳入)
 
-用户希望 Venus 记住自己喜欢的画面主题、声音主题和休息氛围，让每日一景不只是随机内容，而是逐渐靠近自己的审美偏好。
+用户希望 Venus 记住自己明确选择的画面主题、声音主题和休息氛围，让每日一景不只是随机内容，而是逐渐靠近自己的审美偏好。
 
 **Why this priority**: Venus 的差异点是美感空间。相比做更多设置，轻量偏好记忆能强化“这是我的休息空间”，同时保留每日一景的低选择负担。
 
@@ -57,10 +108,12 @@
 
 **Acceptance Scenarios**:
 
-1. **Given** 用户在休息空间中喜欢某张画面，**When** 用户标记“喜欢这类画面”，**Then** Venus 记录主题偏好，而不要求用户管理素材库。
-2. **Given** 用户多次跳过某类主题，**When** Venus 选择下一次每日一景，**Then** 该主题的优先级降低。
-3. **Given** 用户开启声音并调节音量，**When** 下次进入相似主题的休息空间，**Then** Venus 恢复合适的声音偏好。
-4. **Given** 在线 provider 返回不合格内容，**When** Venus 使用缓存或 fallback，**Then** 偏好系统不得绕过授权、质量和主题校验。
+1. **Given** 用户在设置窗口选择内容偏好，**When** Venus 选择下一次每日一景，**Then** 已选主题在合法候选中获得更高排序权重。
+2. **Given** 用户在休息空间点击“喜欢这类”图标，**When** Venus 记录反馈，**Then** 当前主题权重提高，但当前画面不切换。
+3. **Given** 用户在休息空间点击“少来点这类”图标，**When** Venus 记录反馈，**Then** 当前主题权重降低，并切换到下一张候选画面。
+4. **Given** 用户选择“动物与陪伴”，**When** Venus 获取在线候选，**Then** 只允许安静、柔和、低刺激、非表情包化的动物内容。
+5. **Given** 用户开启声音并调节音量，**When** 下次进入相似主题的休息空间，**Then** Venus 恢复合适的声音偏好。
+6. **Given** 在线 provider 返回不合格内容，**When** Venus 使用缓存或 fallback，**Then** 偏好系统不得绕过授权、质量和主题校验。
 
 ---
 
@@ -101,32 +154,38 @@
 ### 建议本轮纳入
 
 - **R-001**: Venus MUST allow users to define working hours during which prompts are allowed.
-- **R-002**: Venus MUST support at least one micro-rest mode that is shorter and less immersive than the full rest space.
-- **R-003**: Venus SHOULD provide a quiet pre-notification before a full rest prompt, allowing postpone or skip before interruption.
-- **R-004**: Venus SHOULD detect natural away time or idle time locally and adjust the next prompt without collecting app content.
+- **R-002**: Venus MUST provide an independent settings window opened from the tray menu.
+- **R-003**: Venus MUST save settings changes immediately and provide restore defaults.
+- **R-004**: Venus MUST provide a pure visual right-bottom edge-glow pre-notification before a full rest prompt.
 - **R-005**: Users MUST be able to mark visual/audio themes as preferred or less preferred from the rest space with one low-friction action.
 - **R-006**: Venus MUST use preference signals only to rank already-valid content; preferences MUST NOT bypass license, quality, or fallback checks.
-- **R-007**: Venus SHOULD restore per-theme audio preference such as enabled state and last comfortable volume.
+- **R-007**: Venus MUST defer both pre-notification and formal prompts while the user is in ActiveFlow.
+- **R-008**: Venus SHOULD restore environment sound preference such as auto-start enabled state and last comfortable volume.
+- **R-009**: Venus SHOULD include a first-run onboarding flow with rhythm, content preference, and edge-glow explanation.
 
 ### 需要用户取舍
 
-- **R-008**: Venus MAY provide lightweight local rest feedback after a session. [NEEDS CLARIFICATION: 是否需要“刚好/太早/太晚”反馈入口？]
-- **R-009**: Venus MAY show a local-only weekly rest pattern summary. [NEEDS CLARIFICATION: 是否接受任何形式的记录展示，还是完全避免统计？]
-- **R-010**: Venus MAY allow two-layer ambient sound mixing. [NEEDS CLARIFICATION: 声音体验是做“少量预设”还是“可混合声源”？]
-- **R-011**: Venus MAY add scene presets such as Focus, Relax, Wind Down. [NEEDS CLARIFICATION: 是否会削弱 Venus 作为“休息空间”而不是泛专注工具的定位？]
-- **R-012**: Venus MAY support content collections or favorites. [NEEDS CLARIFICATION: 是否需要收藏夹，还是只保留偏好信号不做素材库？]
+- **R-010**: Venus MAY provide lightweight local rest feedback after a session. [NEEDS CLARIFICATION: 是否需要“刚好/太早/太晚”反馈入口？]
+- **R-011**: Venus MAY show a local-only weekly rest pattern summary. [NEEDS CLARIFICATION: 是否接受任何形式的记录展示，还是完全避免统计？]
+- **R-012**: Venus MAY allow two-layer ambient sound mixing. [NEEDS CLARIFICATION: 声音体验是做“少量预设”还是“可混合声源”？]
+- **R-013**: Venus MAY add scene presets such as Focus, Relax, Wind Down. [NEEDS CLARIFICATION: 是否会削弱 Venus 作为“休息空间”而不是泛专注工具的定位？]
+- **R-014**: Venus MAY support content collections or favorites. [NEEDS CLARIFICATION: 后续是否需要收藏夹？第一版已确认只做偏好信号，不做强收藏库。]
+- **R-015**: Venus MAY support an optional light-cue mode beyond the 2-minute pre-notification. [NEEDS CLARIFICATION: 是否还需要微休息，或只保留工作时间、心流保护和预告？]
 
 ### 不建议本轮纳入
 
-- **R-013**: Venus SHOULD NOT add accounts, cloud sync, teams, subscriptions, or social/community features in the next iteration.
-- **R-014**: Venus SHOULD NOT add health scores, streaks, leaderboards, productivity scoring, or medicalized claims.
-- **R-015**: Venus SHOULD NOT require biometric, location, calendar, or weather data for the next iteration.
-- **R-016**: Venus SHOULD NOT add complex automation actions before the core rhythm and preference model is stable.
+- **R-016**: Venus SHOULD NOT add accounts, cloud sync, teams, subscriptions, or social/community features in the next iteration.
+- **R-017**: Venus SHOULD NOT add health scores, streaks, leaderboards, productivity scoring, or medicalized claims.
+- **R-018**: Venus SHOULD NOT require biometric, location, calendar, or weather data for the next iteration.
+- **R-019**: Venus SHOULD NOT add complex automation actions before the core rhythm and preference model is stable.
+- **R-020**: Venus SHOULD NOT add recurring micro-rest prompts by default.
 
 ## Edge Cases
 
 - 用户设置的工作时间跨午夜时，Venus 需要明确如何判断允许提醒区间。
-- 用户在微休息提醒后立刻进入完整休息时，Venus 不应连续弹出两个提醒。
+- 用户持续输入或高频鼠标操作跨过提醒时间时，Venus 不应显示弧光或 prompt，而应等待自然停顿。
+- 用户从 overdue 状态停下后，Venus 应先显示弧光，再短缓冲后显示正式 prompt。
+- 用户 hover、focus 或 click 弧光后，如果选择“稍后”或“跳过”，本轮不应再显示正式 prompt。
 - 用户连续多次推迟或跳过时，Venus 应降低提醒强度或建议调整节奏。
 - 用户偏好某个主题但当天在线 provider 不可用时，Venus 应使用缓存或 fallback，而不是阻塞休息空间。
 - 用户反馈“太打扰”后，Venus 应优先减少打扰，而不是继续强化提醒。
@@ -140,8 +199,8 @@
 - **FR-001**: Venus MUST preserve the completed MVP flow of prompt, rest space, optional audio, and return to work.
 - **FR-002**: Venus MUST keep all new rhythm, preference, and feedback data local by default.
 - **FR-003**: Users MUST be able to set working hours or disable working-hours restrictions entirely.
-- **FR-004**: Users MUST be able to distinguish micro-rest prompts from full rest prompts through copy, duration, and UI treatment.
-- **FR-005**: Venus MUST provide a clear way to start a full rest from a micro-rest or tray action.
+- **FR-004**: Users MUST be able to open an independent settings window from the tray menu.
+- **FR-005**: Venus MUST save settings changes immediately and provide restore defaults.
 - **FR-006**: Venus MUST allow users to postpone or skip pre-notifications and prompts without extra confirmation.
 - **FR-007**: Venus MUST maintain full-screen quiet suppression across all new prompt types.
 - **FR-008**: Venus MUST store visual and audio preference signals without storing workplace content.
@@ -149,11 +208,20 @@
 - **FR-010**: Venus MUST keep audio start, mute, volume change, and stop feedback within 1 second for any new audio controls.
 - **FR-011**: Venus MUST provide a way to opt out of any feedback or local summary feature if that feature is selected.
 - **FR-012**: Venus MUST avoid user-facing language that frames rest as medical compliance, productivity scoring, or moral obligation.
+- **FR-013**: Venus MUST use a right-bottom edge-glow as the default pre-notification effect.
+- **FR-014**: The edge-glow MUST be silent, textless by default, non-modal, non-focus-stealing, and free of system notification surfaces.
+- **FR-015**: Venus MUST defer edge-glow and formal prompt while the user is in ActiveFlow.
+- **FR-016**: Venus MUST use only keyboard/mouse input rhythm to detect ActiveFlow in the first iteration.
+- **FR-017**: Venus MUST provide content preference categories including 自然风光、水面与雨、森林与草地、天空与宇宙、城市与建筑、人文街景、动物与陪伴、艺术与纹理.
+- **FR-018**: Rest-space feedback MUST include icon-only “喜欢这类” and “少来点这类” actions with tooltip and accessible labels.
+- **FR-019**: Venus MUST keep environment sound off by default unless the user enables auto-start in settings.
 
 ### Key Entities *(include if feature involves data)*
 
 - **Working Hours**: Local schedule defining when Venus may show prompts; includes enabled state, day ranges, start/end time, and behavior outside working hours.
-- **Rest Mode**: Represents micro-rest or full-rest; includes duration, prompt style, eligible actions, and whether full-screen rest space is used.
+- **Settings Window**: Independent configuration surface opened from tray; includes rhythm, reminders, content preferences, environment sound, privacy, restore defaults, and immediate persistence behavior.
+- **Onboarding Flow**: First-run lightweight setup that writes to the same preference model as settings; includes rhythm, content preference, and edge-glow explanation.
+- **ActiveFlow**: Local input-derived state indicating sustained keyboard or mouse activity; used only to defer notification surfaces and not stored as workplace content.
 - **Pre-Notification**: Low-friction signal before a full rest prompt; includes due time, available actions, and suppression conditions.
 - **Preference Signal**: Local signal such as liked theme, disliked theme, skipped theme, audio enabled state, or comfortable volume.
 - **Rest Feedback**: Optional local response after a rest, such as just right, too early, too late, too interruptive, or no feedback.
@@ -165,7 +233,7 @@
 
 - **SC-001**: 80% of test users can configure working hours and understand whether Venus is currently allowed to prompt within 2 minutes.
 - **SC-002**: 90% of prompts are suppressed outside configured working hours.
-- **SC-003**: 75% of test users can correctly explain the difference between micro-rest and full rest after seeing each once.
+- **SC-003**: 75% of test users can correctly explain the right-bottom edge-glow pre-notification after first-run onboarding.
 - **SC-004**: 70% of users who mark content preferences report that the next five rest spaces feel at least as relevant as MVP baseline.
 - **SC-005**: 95% of pre-notification, postpone, skip, start rest, mute, and stop actions produce feedback within 1 second.
 - **SC-006**: 95% of full rest openings still show online content, cached content, or bundled fallback within 2 seconds.
@@ -174,8 +242,8 @@
 
 ## Constitution Alignment *(mandatory)*
 
-- **Documentation Impact**: 下一轮 spec、plan、tasks、quickstart 和用户使用说明继续使用中文。若纳入节奏、偏好或反馈系统，必须用 Mermaid 展示从工作时间、微休息、预通知、完整休息到反馈/偏好更新的状态流。
-- **Testing Expectations**: 每个被选中的用户故事必须有独立可验证测试。P1 需要覆盖工作时间、跨午夜、微休息、预通知、全屏静默和自然离开；P2 需要覆盖偏好信号、内容授权硬门槛、缓存/fallback 和声音偏好恢复。
+- **Documentation Impact**: 下一轮 spec、plan、tasks、quickstart 和用户使用说明继续使用中文。若纳入节奏、偏好或反馈系统，必须用 Mermaid 展示从工作时间、ActiveFlow、弧光预告、正式 prompt、完整休息到反馈/偏好更新的状态流。
+- **Testing Expectations**: 每个被选中的用户故事必须有独立可验证测试。P1 需要覆盖工作时间、跨午夜、ActiveFlow 顺延、弧光预告、全屏静默、设置窗口和首次引导；P2 需要覆盖偏好信号、内容授权硬门槛、缓存/fallback、图标轻反馈和声音偏好恢复。
 - **Performance Expectations**: 新增提示和控制反馈继续保持 1 秒内可感知；完整休息空间继续保持 2 秒内可见；任何本地统计或偏好计算不得造成可感知启动延迟。
 - **UX Consistency Requirements**: 新增 UI 必须保持轻、静、美；不得引入营销首页、复杂设置墙、健康评分、连续打卡、排行榜、生产力仪表盘或大面积高刺激视觉主题。
 
@@ -188,8 +256,8 @@
 
 ## Open Questions
 
-1. 本轮是否把 **P1 工作时间 + 微休息 + 提前预告** 作为主线？
-2. 内容偏好要做到什么程度：只做“喜欢/少来点这类”，还是做收藏夹？
-3. 是否接受任何本地回顾/趋势？如果接受，是只服务节奏建议，还是允许用户主动查看？
-4. 声音下一步是“少量高质量预设”，还是“可混合声源”？
-5. 是否要引入 Focus/Relax/Wind Down 等场景名，还是继续只围绕“休息”表达？
+1. 是否还需要可选轻提示模式，或本轮只保留工作时间、ActiveFlow 心流保护和弧光预告？
+2. 是否接受任何本地回顾/趋势？如果接受，是只服务节奏建议，还是允许用户主动查看？
+3. 声音下一步是“少量高质量预设”，还是“可混合声源”？
+4. 是否要引入 Focus/Relax/Wind Down 等场景名，还是继续只围绕“休息”表达？
+5. 环境声自动开启规则已确认默认关闭；是否需要在首次引导中展示该开关，或只放入设置窗口？
