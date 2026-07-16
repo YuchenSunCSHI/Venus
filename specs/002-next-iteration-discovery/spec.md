@@ -8,6 +8,8 @@
 
 **Input**: User description: "当前 MVP 已完成，希望在此基础上进行下一轮迭代。先参考同类产品实现，罗列可选需求，由用户取舍；可以创建一个新的 Spec。"
 
+**Design Direction**: [design-direction.md](design-direction.md)
+
 ## 同类产品参考
 
 本节只提炼公开产品能力，不复制具体实现或文案。Venus 下一轮仍应避免变成医疗化、打卡式或效率焦虑产品。
