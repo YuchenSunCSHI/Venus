@@ -76,7 +76,26 @@
 - 环境声默认关闭。
 - 用户可在设置窗口开启“进入休息空间时自动开启环境声”。
 - 自动开启环境声时使用上次音量。
+- 环境声自动开启开关不放入首次引导，只放入设置窗口。
+- 首次引导最多轻描淡写说明声音可在休息空间中手动开启。
+- 002 只做少量高质量环境声预设，不做可混合声源或声音调音台。
+- 环境声应默认与图片风格自动同步；用户关闭自动匹配时保持当前声音。
+- 声音预设建议限制在森林、水声、雨声、风声、夜晚、安静空气等少量类别。
+- 切换图片时，同类声音保持当前播放；跨类声音延迟约 1 秒后 crossfade。
 - 声音偏好不应导致突然外放；设备不可用时继续无声休息。
+
+### 本地记录与后续 agent 方向
+
+- 002 不纳入本地回顾、趋势页、长期偏好总结或 `soul.md` 写入。
+- 002 只保留完整功能闭环需要的显式配置、当前提醒状态、本轮 prompt 行为和内容轻反馈权重。
+- 用户喜好长期沉淀、自然语言偏好、`soul.md` 和本地 agent 模式归入后续独立 spec。
+- 002 不展示 weekly summary、完成率、连续天数、健康/效率评价或用户画像。
+
+### 范围收敛
+
+- 002 不纳入额外轻提示、周期微休息或 recurring micro-rest。
+- 002 只保留工作时间、ActiveFlow 心流保护、完整休息前右下角边缘弧光预告和正式 prompt。
+- 002 不引入 Focus、Relax、Wind Down、Sleep 等场景名，继续只围绕“休息”表达。
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -136,18 +155,19 @@
 
 ### User Story 4 - 扩展声音体验但保持休息空间安静 (Priority: P4, 待取舍)
 
-用户希望有更丰富的环境声选择，例如雨声、水声、森林、夜晚、风声，甚至组合两个低强度声源，但不希望在休息时进入复杂混音界面。
+用户希望有少量高质量环境声预设，例如雨声、水声、森林、夜晚、风声，并让声音与图片风格保持同步，但不希望在休息时进入复杂混音界面。
 
 **Why this priority**: 声音是 Venus 的重要氛围层，但第一轮迭代中如果过早做复杂音频系统，会分散对节奏和日常可用性的投入。
 
-**Independent Test**: 用户可选择一个声音预设或让 Venus 自动匹配视觉主题；声音仍能在 1 秒内开启、静音和停止，结束休息后无残留播放。
+**Independent Test**: 用户可在设置窗口启用环境声自动匹配，并验证不同图片主题映射到合适的少量声音预设；声音仍能在 1 秒内开启、静音和停止，结束休息后无残留播放。
 
 **Acceptance Scenarios**:
 
-1. **Given** 用户进入休息空间，**When** 用户打开声音菜单，**Then** Venus 只展示少量预设，而不是完整音频库。
+1. **Given** 用户进入休息空间，**When** 用户开启声音，**Then** Venus 使用与当前图片风格匹配的少量高质量环境声预设，而不是展示完整音频库。
 2. **Given** 当前画面主题是雨、湖或森林，**When** Venus 自动选择声音，**Then** 声音主题与视觉主题保持一致。
-3. **Given** 用户选择混合声音，**When** 两个声源同时播放，**Then** 总音量保持低强度，不出现突兀过响或爆音。
-4. **Given** 音频设备不可用，**When** 用户进入休息空间，**Then** Venus 保持无声可用路径。
+3. **Given** 用户按 Space 切换图片，**When** 新旧图片属于同类声音，**Then** Venus 保持当前声音不打断。
+4. **Given** 用户按 Space 切换到跨类主题图片，**When** 自动匹配开启，**Then** Venus 延迟约 1 秒后 crossfade 到匹配声音。
+5. **Given** 音频设备不可用，**When** 用户进入休息空间，**Then** Venus 保持无声可用路径。
 
 ## 候选需求清单
 
@@ -165,12 +185,12 @@
 
 ### 需要用户取舍
 
-- **R-010**: Venus MAY provide lightweight local rest feedback after a session. [NEEDS CLARIFICATION: 是否需要“刚好/太早/太晚”反馈入口？]
-- **R-011**: Venus MAY show a local-only weekly rest pattern summary. [NEEDS CLARIFICATION: 是否接受任何形式的记录展示，还是完全避免统计？]
-- **R-012**: Venus MAY allow two-layer ambient sound mixing. [NEEDS CLARIFICATION: 声音体验是做“少量预设”还是“可混合声源”？]
-- **R-013**: Venus MAY add scene presets such as Focus, Relax, Wind Down. [NEEDS CLARIFICATION: 是否会削弱 Venus 作为“休息空间”而不是泛专注工具的定位？]
-- **R-014**: Venus MAY support content collections or favorites. [NEEDS CLARIFICATION: 后续是否需要收藏夹？第一版已确认只做偏好信号，不做强收藏库。]
-- **R-015**: Venus MAY support an optional light-cue mode beyond the 2-minute pre-notification. [NEEDS CLARIFICATION: 是否还需要微休息，或只保留工作时间、心流保护和预告？]
+- **R-010**: Venus MAY provide lightweight local rest feedback after a session. [DEFERRED: 002 不纳入；长期偏好总结与 `soul.md` 归入后续本地 agent spec。]
+- **R-011**: Venus MAY show a local-only weekly rest pattern summary. [DEFERRED: 002 不做回顾/趋势页、统计页或用户画像。]
+- **R-012**: Venus MAY allow two-layer ambient sound mixing. [DEFERRED: 002 只做少量高质量环境声预设和图片风格同步，不做混音。]
+- **R-013**: Venus MAY add scene presets such as Focus, Relax, Wind Down. [DEFERRED: 002 不引入场景名，只围绕“休息”表达。]
+- **R-014**: Venus MAY support content collections or favorites. [DEFERRED: 002 只做偏好信号，不做收藏夹或素材库。]
+- **R-015**: Venus MAY support an optional light-cue mode beyond the 2-minute pre-notification. [DEFERRED: 002 不纳入额外轻提示或微休息。]
 
 ### 不建议本轮纳入
 
@@ -179,6 +199,9 @@
 - **R-018**: Venus SHOULD NOT require biometric, location, calendar, or weather data for the next iteration.
 - **R-019**: Venus SHOULD NOT add complex automation actions before the core rhythm and preference model is stable.
 - **R-020**: Venus SHOULD NOT add recurring micro-rest prompts by default.
+- **R-021**: Venus SHOULD NOT write long-term preference summaries to `soul.md` in 002.
+- **R-022**: Venus SHOULD NOT add Focus, Relax, Wind Down, Sleep, productivity, or wellness scenario naming in 002.
+- **R-023**: Venus SHOULD NOT add sound mixing, playlist, or full sound library controls in 002.
 
 ## Edge Cases
 
@@ -215,6 +238,10 @@
 - **FR-017**: Venus MUST provide content preference categories including 自然风光、水面与雨、森林与草地、天空与宇宙、城市与建筑、人文街景、动物与陪伴、艺术与纹理.
 - **FR-018**: Rest-space feedback MUST include icon-only “喜欢这类” and “少来点这类” actions with tooltip and accessible labels.
 - **FR-019**: Venus MUST keep environment sound off by default unless the user enables auto-start in settings.
+- **FR-020**: Venus MUST keep environment sound auto-start out of first-run onboarding; onboarding MAY mention that sound can be manually enabled in rest space.
+- **FR-021**: Venus MUST provide a small set of high-quality environment sound presets and automatically match them to visual theme when auto-match is enabled.
+- **FR-022**: Venus MUST avoid any user-facing Focus, Relax, Wind Down, Sleep, productivity, or wellness scenario naming in 002.
+- **FR-023**: Venus MUST avoid local analytics dashboards, weekly summaries, streaks, scores, or `soul.md` updates in 002.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -226,6 +253,8 @@
 - **Preference Signal**: Local signal such as liked theme, disliked theme, skipped theme, audio enabled state, or comfortable volume.
 - **Rest Feedback**: Optional local response after a rest, such as just right, too early, too late, too interruptive, or no feedback.
 - **Local Summary**: Optional non-judgmental view of recent rest patterns without streaks, scores, ranking, or health claims.
+- **Sound Preset**: Small environment sound category such as forest, water, rain, air, night, or quiet air; may be auto-matched from visual theme without exposing a mixer.
+- **Future Soul Memory**: Deferred local-agent direction for natural-language preference summaries and `soul.md`; explicitly out of scope for 002.
 
 ## Success Criteria *(mandatory)*
 
@@ -256,8 +285,7 @@
 
 ## Open Questions
 
-1. 是否还需要可选轻提示模式，或本轮只保留工作时间、ActiveFlow 心流保护和弧光预告？
-2. 是否接受任何本地回顾/趋势？如果接受，是只服务节奏建议，还是允许用户主动查看？
-3. 声音下一步是“少量高质量预设”，还是“可混合声源”？
-4. 是否要引入 Focus/Relax/Wind Down 等场景名，还是继续只围绕“休息”表达？
-5. 环境声自动开启规则已确认默认关闭；是否需要在首次引导中展示该开关，或只放入设置窗口？
+1. 工作时间范围的默认值应是什么：工作日 09:00-18:00、首次引导询问，还是默认不限制？
+2. 工作间隔和休息时长的预设应有哪些：继续 50+10，还是提供 25+5、50+10、75+10 等选项？
+3. ActiveFlow 的第一版输入阈值应如何定义：只用最近输入时间，还是统计 10 秒内输入频率？
+4. 设置窗口是否需要“隐私与数据”页中的清除缓存、清除偏好、关闭偏好学习？
