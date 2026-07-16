@@ -40,6 +40,9 @@
 - 用户处于持续键盘或鼠标输入时，既不显示弧光，也不显示正式休息 prompt。
 - 休息提醒在持续工作时进入 pending 状态，向后顺延到持续输入结束后。
 - 第一版 ActiveFlow 判断只基于本机键盘/鼠标输入节奏，不读取窗口标题、应用名、屏幕内容、会议内容或文档正文。
+- 第一版 ActiveFlow 使用最近输入时间判断：最近 10 秒内有键盘或鼠标输入即视为 active。
+- 第一版 QuietWindow 定义为连续 10 秒没有键盘或鼠标输入。
+- ActiveFlow 阈值不暴露给用户配置。
 - 用户停下后先显示右下角边缘弧光；如果 30 秒内仍保持安静，再显示正式 prompt。
 - 弧光 hover、focus 或 click 后可展开轻浮层，显示“休息快到了”与“稍后”“跳过”操作。
 - 预告展开层不提供“开始休息”；“开始休息”只出现在正式 prompt。
@@ -54,7 +57,14 @@
 - 设置窗口必须提供恢复默认能力。
 - 首次引导与设置窗口共用同一份偏好模型，但首次引导只展示最少步骤。
 - 首次引导只包含 3 步：休息节奏、内容偏好、弧光提醒说明。
+- 首次引导中工作时间默认不限制，但提供“工作日 09:00-18:00”和自定义入口作为建议。
+- 工作时间只有在用户显式设置后才用于静默自动提醒；托盘“开始休息”始终可用。
+- 休息节奏预设为 25+5、50+10、75+10，并支持用户自定义。
+- 默认节奏继续使用 50 分钟工作 + 10 分钟休息。
+- 自定义工作间隔建议限制在 15-120 分钟；自定义休息时长建议限制在 1-30 分钟。
 - 完整配置放入独立设置窗口，包含休息节奏、提醒方式、内容偏好、环境声、隐私与数据。
+- “隐私与数据”页包含本地数据说明、清除内容缓存、清除偏好与设置、关闭偏好学习。
+- “隐私与数据”页不包含导入导出、事件日志、高级调试或复杂数据管理。
 
 ### 内容偏好与轻反馈
 
@@ -242,13 +252,22 @@
 - **FR-021**: Venus MUST provide a small set of high-quality environment sound presets and automatically match them to visual theme when auto-match is enabled.
 - **FR-022**: Venus MUST avoid any user-facing Focus, Relax, Wind Down, Sleep, productivity, or wellness scenario naming in 002.
 - **FR-023**: Venus MUST avoid local analytics dashboards, weekly summaries, streaks, scores, or `soul.md` updates in 002.
+- **FR-024**: Venus MUST default working-hours restriction to off, while offering 工作日 09:00-18:00 and custom working-hours setup in onboarding/settings.
+- **FR-025**: Venus MUST provide 25+5, 50+10, and 75+10 rhythm presets, with 50+10 as the default.
+- **FR-026**: Venus MUST support custom work and rest durations within bounded ranges.
+- **FR-027**: Venus MUST define ActiveFlow in 002 as any keyboard or mouse input within the last 10 seconds.
+- **FR-028**: Venus MUST NOT expose the ActiveFlow threshold as a user-facing setting in 002.
+- **FR-029**: The privacy and data settings page MUST include local data explanation, clear content cache, clear preferences/settings, and disable preference learning.
+- **FR-030**: Venus MUST NOT include import/export, event log browsing, or advanced debug controls in the 002 settings UI.
 
 ### Key Entities *(include if feature involves data)*
 
-- **Working Hours**: Local schedule defining when Venus may show prompts; includes enabled state, day ranges, start/end time, and behavior outside working hours.
+- **Working Hours**: Local schedule defining when Venus may show automatic prompts; disabled by default, may use 工作日 09:00-18:00 or custom ranges, and never blocks manual tray rest.
 - **Settings Window**: Independent configuration surface opened from tray; includes rhythm, reminders, content preferences, environment sound, privacy, restore defaults, and immediate persistence behavior.
 - **Onboarding Flow**: First-run lightweight setup that writes to the same preference model as settings; includes rhythm, content preference, and edge-glow explanation.
 - **ActiveFlow**: Local input-derived state indicating sustained keyboard or mouse activity; used only to defer notification surfaces and not stored as workplace content.
+- **Rhythm Preset**: User-selectable work/rest pair such as 25+5, 50+10, or 75+10; custom values are bounded to avoid unusable intervals.
+- **Privacy and Data Controls**: Settings group for explaining local data use, clearing content cache, clearing preferences/settings, and disabling preference learning.
 - **Pre-Notification**: Low-friction signal before a full rest prompt; includes due time, available actions, and suppression conditions.
 - **Preference Signal**: Local signal such as liked theme, disliked theme, skipped theme, audio enabled state, or comfortable volume.
 - **Rest Feedback**: Optional local response after a rest, such as just right, too early, too late, too interruptive, or no feedback.
@@ -285,7 +304,4 @@
 
 ## Open Questions
 
-1. 工作时间范围的默认值应是什么：工作日 09:00-18:00、首次引导询问，还是默认不限制？
-2. 工作间隔和休息时长的预设应有哪些：继续 50+10，还是提供 25+5、50+10、75+10 等选项？
-3. ActiveFlow 的第一版输入阈值应如何定义：只用最近输入时间，还是统计 10 秒内输入频率？
-4. 设置窗口是否需要“隐私与数据”页中的清除缓存、清除偏好、关闭偏好学习？
+当前 002 scope 的核心产品参数已收敛。后续进入 plan/tasks 前，如需继续澄清，应聚焦实现边界、测试切片和视觉细节，而不是重新打开微休息、统计页、场景名或声音混音等已 deferred 范围。
